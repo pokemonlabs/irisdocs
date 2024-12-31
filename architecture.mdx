@@ -1,0 +1,147 @@
+---
+title: 'Iris Architecture'
+description: 'Understanding the elegant and intelligent system designed for autonomous web testing'
+---
+
+The Iris architecture is an elegant and intelligent system designed for autonomous web testing.
+
+```mermaid
+graph TB
+    subgraph "Control Plane"
+        FE[Frontend - Next.js/TypeScript]
+        API[tRPC API Layer]
+        DB[(Database - Prisma/ZenStack)]
+        MB[Message Broker]
+        
+        subgraph "AI Orchestrator"
+            AIC[AI Controller]
+            MLM[ML Models Manager]
+            TG[Test Generator]
+        end
+    end
+
+    subgraph "AI Agent Network"
+        A1[Agent 1]
+        A2[Agent 2]
+        A3[Agent 3]
+        
+        subgraph "Agent Capabilities"
+            VP[Vision Processing]
+            NLP[Natural Language Processing]
+            TE[Test Execution]
+            RL[Recursive Learning]
+        end
+    end
+
+    subgraph "External Systems"
+        AUTH[OAuth Providers]
+        WEB[Web Applications]
+        STORAGE[Cloud Storage]
+    end
+
+    %% Control Plane Connections
+    FE <--> API
+    API <--> DB
+    API <--> MB
+    API <--> AIC
+    AIC <--> MLM
+    AIC <--> TG
+    
+    %% AI Agent Connections
+    MB <--> A1
+    MB <--> A2
+    MB <--> A3
+    
+    A1 --> VP
+    A1 --> NLP
+    A1 --> TE
+    A1 --> RL
+    
+    %% External Connections
+    FE <--> AUTH
+    A1 <--> WEB
+    A2 <--> WEB
+    A3 <--> WEB
+    MLM <--> STORAGE
+
+    classDef primary fill:#2563eb,stroke:#1d4ed8,color:white
+    classDef secondary fill:#4b5563,stroke:#374151,color:white
+    classDef external fill:#059669,stroke:#047857,color:white
+
+    class FE,API,DB,MB,AIC,MLM,TG primary
+    class A1,A2,A3,VP,NLP,TE,RL secondary
+    class AUTH,WEB,STORAGE external
+```
+
+The code is available at [github.com/tryiris/iris](https://github.com/codebanesr/irisland).
+
+## Architecture Components
+
+### Control Plane
+
+The Control Plane is the central nervous system of Iris, built with modern technologies:
+
+<Card title="T3 Stack Integration" icon="layer-group">
+  * Built on the [T3 Stack](https://create.t3.gg/) with ZenStack for type-safe database operations
+  * Manages the message broker for efficient test distribution
+  * Orchestrates the multimodal AI agents
+</Card>
+
+<Card title="Frontend Interface" icon="browser">
+  * Built with [Next.js and TypeScript](https://app.tryiris.dev)
+  * Provides an intuitive interface for test creation and monitoring
+  * Connects via tRPC for type-safe API communications
+</Card>
+
+<Card title="Data & Security" icon="shield-check">
+  * Authentication through secure OAuth providers
+  * [Prisma with ZenStack](https://zenstack.dev/) for robust database management
+  * Enhanced access control and data security
+</Card>
+
+### AI Agent Network
+
+Our [AI Agents](https://app.tryiris.dev) form a sophisticated distributed network that connects to the control plane through a message broker system. Each agent is equipped with advanced capabilities:
+
+<CardGroup>
+  <Card title="Natural Language Processing" icon="language">
+    Process and understand test specifications written in plain English
+  </Card>
+  <Card title="Multimodal Testing" icon="eye">
+    Execute tests using combined vision, text, and interaction capabilities
+  </Card>
+  <Card title="Adaptive Learning" icon="brain">
+    Automatically adjust to website changes through recursive learning
+  </Card>
+  <Card title="Real-time Updates" icon="bolt">
+    Update test results instantly to the central database
+  </Card>
+</CardGroup>
+
+### Network Capabilities
+
+The distributed agent network provides:
+
+* **Dynamic Scaling**: Automatically scales based on testing demand
+* **Self-Organization**: Agents self-organize to handle different test types
+* **Collective Learning**: Learn from shared testing experiences
+* **Autonomous Adaptation**: Adapt to new testing patterns without manual intervention
+
+### AI Models
+
+The agents leverage state-of-the-art AI models for:
+
+<CardGroup>
+  <Card title="Visual Understanding" icon="eye">
+    Advanced processing of web interfaces and UI elements
+  </Card>
+  <Card title="Language Processing" icon="message">
+    Natural language understanding of test requirements
+  </Card>
+  <Card title="Behavior Modeling" icon="user">
+    Accurate simulation of human interactions
+  </Card>
+  <Card title="Test Generation" icon="code">
+    Automated creation and execution of test cases
+  </Card>
+</CardGroup> 

@@ -1,86 +1,114 @@
 ---
-title: 'Quickstart'
-description: 'Start building awesome documentation in under 5 minutes'
+title: 'Quick Start'
+description: 'These instructions will help you get started with Iris, an AI-powered UI testing platform that understands and executes tests using natural language.'
 ---
 
-## Setup your development
+## Sign Up
 
-Learn how to update your docs locally and deploy them to the public.
+Visit https://app.tryiris.dev to create your account.
 
-### Edit and preview
+<Frame>
+  {/* Add Home Page image here */}
+  <img src="/images/home-page.png" alt="Iris Home Page" />
+</Frame>
 
-<AccordionGroup>
-  <Accordion icon="github" title="Clone your docs locally">
-    During the onboarding process, we created a repository on your Github with
-    your docs content. You can find this repository on our
-    [dashboard](https://dashboard.mintlify.com). To clone the repository
-    locally, follow these
-    [instructions](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-    in your terminal.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Preview changes">
-    Previewing helps you make sure your changes look as intended. We built a
-    command line interface to render these changes locally. 1. Install the
-    [Mintlify CLI](https://www.npmjs.com/package/mintlify) to preview the
-    documentation changes locally with this command: ``` npm i -g mintlify ```
-    2. Run the following command at the root of your documentation (where
-    `mint.json` is): ``` mintlify dev ```
-  </Accordion>
-</AccordionGroup>
+1. Click "Login / Register" to create your account
+2. Sign up using email or continue with Google Sign in
 
-### Deploy your changes
+<Frame>
+  {/* Add Login Page image here */}
+  <img src="/images/login-page.png" alt="Iris Login Page" />
+</Frame>
 
-<AccordionGroup>
+## Configure Your First Agent
 
-<Accordion icon="message-bot" title="Install our Github app">
-  Our Github app automatically deploys your changes to your docs site, so you
-  don't need to manage deployments yourself. You can find the link to install on
-  your [dashboard](https://dashboard.mintlify.com). Once the bot has been
-  successfully installed, there should be a check mark next to the commit hash
-  of the repo.
-</Accordion>
-<Accordion icon="rocket" title="Push your changes">
-  [Commit and push your changes to
-  Git](https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository#about-git-push)
-  for your changes to update in your docs site. If you push and don't see that
-  the Github app successfully deployed your changes, you can also manually
-  update your docs through our [dashboard](https://dashboard.mintlify.com).
-</Accordion>
+After logging in, you'll need to set up your default AI agent:
 
-</AccordionGroup>
+1. Go to the Agent section
+2. Click on "Configure Agent"
+3. Select your preferred AI provider
+4. Enter the required API credentials
+5. Save your configuration
 
-## Update your docs
+<Frame>
+  {/* Add Agent Configuration image here */}
+  <img src="/images/agent-config.png" alt="Agent Configuration" />
+</Frame>
 
-Add content directly in your files with MDX syntax and React components. You can use any of our components, or even build your own.
+## Create a Project
+
+Projects help organize your tests:
+
+1. Navigate to Projects
+2. Click on "Create Project"
+3. Enter a project name and description
+4. Click on "Create Project" to save
+
+<Frame>
+  {/* Add Create Project image here */}
+  <img src="/images/create-project.png" alt="Create Project" />
+</Frame>
+
+## Create Your First Test
+
+With your project created, you can now add tests:
+
+1. Click on "Create Test" within your project
+2. Select the project from the dropdown
+3. Enter test details (name and description)
+4. Provide the target website URL
+5. Describe your test scenario in natural language (e.g. Navigate to google.com and search automated QA testing using Iris)
+6. Click on "Preview Interpretation" to verify
+7. Click on "Create Test" to save
+
+<Frame>
+  {/* Add Create Test image here */}
+  <img src="/images/create-test.png" alt="Create Test" />
+</Frame>
+
+## Run Tests
+
+Execute your tests and view results:
+
+1. From the project dashboard, select individual tests or click on "Run All Tests" to run all tests at once
+2. The AI agent will execute the tests based on your scenarios
+3. View real-time progress in the Latest Run section
+4. Access detailed results in the Test Run Results section
+
+<Frame>
+  {/* Add Run Tests image here */}
+  <img src="/images/run-tests.png" alt="Run Tests" />
+</Frame>
+
+## View and Share Results
+
+Review and collaborate on test results:
+
+1. Click on any test run to see detailed steps and outcomes
+2. Share reports via email with team members
+3. Access historical test runs for comparison
+4. Export results as needed
+
+<Frame>
+  {/* Add Test Results image here */}
+  <img src="/images/test-results.png" alt="Test Results" />
+</Frame>
+
+## Next Steps
 
 <CardGroup>
-
-<Card title="Style Your Docs" icon="paintbrush" href="/settings/global">
-  Add flair to your docs with personalized branding.
-</Card>
-
-<Card
-  title="Add API Endpoints"
-  icon="square-code"
-  href="/api-playground/configuration"
->
-  Implement your OpenAPI spec and enable API user interaction.
-</Card>
-
-<Card
-  title="Integrate Analytics"
-  icon="chart-mixed"
-  href="/analytics/supported-integrations"
->
-  Draw insights from user interactions with your documentation.
-</Card>
-
-<Card
-  title="Host on a Custom Domain"
-  icon="browser"
-  href="/settings/custom-domain/subdomain"
->
-  Keep your docs on your own website's subdomain.
-</Card>
-
+  <Card title="Create Complex Tests" icon="code-branch">
+    Learn to create more sophisticated test scenarios
+  </Card>
+  <Card title="Configure AI Agents" icon="robot">
+    Set up additional AI agents for different testing needs
+  </Card>
+  <Card title="Integrate Tools" icon="plug">
+    Connect with your development tools
+  </Card>
+  <Card title="Team Collaboration" icon="users">
+    Invite and manage team members
+  </Card>
 </CardGroup>
+
+For enhanced features and team collaboration, check out our [pricing plans](https://tryiris.dev/pricing).
