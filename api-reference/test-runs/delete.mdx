@@ -1,0 +1,94 @@
+---
+title: 'Delete Test Run'
+api: 'DELETE /api/v1/test-runs/{test_run_id}'
+description: 'Delete a test run and its associated resources'
+---
+
+## Path Parameters
+
+<ParamField path="test_run_id" type="string" required>
+  The unique identifier of the test run to delete
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="delete_artifacts" type="boolean">
+  If true, also delete associated artifacts (screenshots, videos). Default: false
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the deletion was successful
+</ResponseField>
+
+<ResponseField name="deleted_at" type="string">
+  ISO 8601 timestamp of when the test run was deleted
+</ResponseField>
+
+<ResponseField name="deleted_resources" type="object">
+  <Expandable title="properties">
+    <ResponseField name="screenshots" type="integer">
+      Number of screenshots deleted
+    </ResponseField>
+    <ResponseField name="videos" type="integer">
+      Number of videos deleted
+    </ResponseField>
+    <ResponseField name="logs" type="integer">
+      Number of log files deleted
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X DELETE "https://api.tryiris.dev/api/v1/test-runs/run_2f3e4d5c6b?delete_artifacts=true" \
+  -H "Authorization: Bearer ${API_KEY}"
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "deleted_at": "2024-01-20T15:00:00Z",
+  "deleted_resources": {
+    "screenshots": 2,
+    "videos": 1,
+    "logs": 1
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="404 Not Found" type="object">
+  Test run not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Test run not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="409 Conflict" type="object">
+  Test run is currently active
+  ```json
+  {
+    "error": "conflict",
+    "message": "Cannot delete an active test run"
+  }
+  ```
+</ResponseField> 

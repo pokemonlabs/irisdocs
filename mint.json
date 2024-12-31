@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Api  Reference",
+  "name": "Iris QA Documentation",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -18,12 +18,12 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:support@tryiris.dev"
     }
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://app.tryiris.dev"
   },
   "tabs": [
     {
@@ -35,17 +35,17 @@
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "https://docs.tryiris.dev"
     },
     {
       "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "icon": "discord",
+      "url": "https://discord.gg/MEBhGWev"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://blogs.tryiris.dev"
     }
   ],
   "navigation": [
@@ -54,24 +54,60 @@
       "pages": ["introduction", "quickstart", "development"]
     },
     {
-      "group": "Essentials",
+      "group": "Core Concepts",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "core-concepts/agents",
+        "core-concepts/projects",
+        "core-concepts/tests",
+        "core-concepts/test-runs"
       ]
     },
     {
-      "group": "API Documentation",
-      "pages": ["api-reference/introduction"]
+      "group": "API Reference",
+      "pages": [
+        "api-reference/introduction",
+        {
+          "group": "Agents",
+          "pages": [
+            "api-reference/agents/create",
+            "api-reference/agents/get",
+            "api-reference/agents/update",
+            "api-reference/agents/delete"
+          ]
+        },
+        {
+          "group": "Projects",
+          "pages": [
+            "api-reference/projects/create",
+            "api-reference/projects/get",
+            "api-reference/projects/update",
+            "api-reference/projects/delete"
+          ]
+        },
+        {
+          "group": "Tests",
+          "pages": [
+            "api-reference/tests/create",
+            "api-reference/tests/get",
+            "api-reference/tests/update",
+            "api-reference/tests/delete"
+          ]
+        },
+        {
+          "group": "Test Runs",
+          "pages": [
+            "api-reference/test-runs/create",
+            "api-reference/test-runs/get",
+            "api-reference/test-runs/update",
+            "api-reference/test-runs/delete"
+          ]
+        }
+      ]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "x": "https://x.com/tryiris",
+    "github": "https://github.com/irislabs",
+    "linkedin": "https://linkedin.com/company/irislabs"
   }
 }

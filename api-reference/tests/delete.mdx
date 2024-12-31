@@ -1,0 +1,98 @@
+---
+title: 'Delete Test'
+api: 'DELETE /api/v1/tests/{test_id}'
+description: 'Delete an existing test and its associated test runs'
+---
+
+## Path Parameters
+
+<ParamField path="test_id" type="string" required>
+  The unique identifier of the test to delete
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="force" type="boolean">
+  If true, forcefully delete the test even if it has active runs. Default: false
+</ParamField>
+
+<ParamField query="delete_runs" type="boolean">
+  If true, also delete all associated test runs. Default: true
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the deletion was successful
+</ResponseField>
+
+<ResponseField name="deleted_at" type="string">
+  ISO 8601 timestamp of when the test was deleted
+</ResponseField>
+
+<ResponseField name="deleted_resources" type="object">
+  <Expandable title="properties">
+    <ResponseField name="test_runs" type="integer">
+      Number of test runs deleted
+    </ResponseField>
+    <ResponseField name="screenshots" type="integer">
+      Number of screenshots deleted
+    </ResponseField>
+    <ResponseField name="videos" type="integer">
+      Number of videos deleted
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X DELETE "https://api.tryiris.dev/api/v1/tests/tst_1a2b3c4d5e?force=true&delete_runs=true" \
+  -H "Authorization: Bearer ${API_KEY}"
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "deleted_at": "2024-01-20T18:00:00Z",
+  "deleted_resources": {
+    "test_runs": 50,
+    "screenshots": 150,
+    "videos": 50
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="404 Not Found" type="object">
+  Test not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Test not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="409 Conflict" type="object">
+  Test has active runs and force is false
+  ```json
+  {
+    "error": "conflict",
+    "message": "Test has active runs. Use force=true to delete anyway"
+  }
+  ```
+</ResponseField> 

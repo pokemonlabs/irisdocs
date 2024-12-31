@@ -1,0 +1,179 @@
+---
+title: 'Create Test Run'
+api: 'POST /api/v1/test-runs'
+description: 'Create and execute a new test run'
+---
+
+## Request Body
+
+<ParamField body="test_id" type="string" required>
+  The unique identifier of the test to run
+</ParamField>
+
+<ParamField body="agent_id" type="string" required>
+  The unique identifier of the agent to use for this test run
+</ParamField>
+
+<ParamField body="environment" type="string">
+  Override the default environment for this test run
+</ParamField>
+
+<ParamField body="configuration" type="object">
+  <Expandable title="properties">
+    <ParamField body="timeout" type="integer">
+      Test execution timeout in seconds. Overrides project default.
+    </ParamField>
+    <ParamField body="retry_count" type="integer">
+      Number of retry attempts for failed steps. Default: 1
+    </ParamField>
+    <ParamField body="parallel_steps" type="boolean">
+      Whether to execute test steps in parallel when possible. Default: false
+    </ParamField>
+    <ParamField body="screenshot_on_failure" type="boolean">
+      Capture screenshots on step failures. Default: true
+    </ParamField>
+    <ParamField body="video_recording" type="boolean">
+      Record video of the test execution. Default: false
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="variables" type="object">
+  Environment variables for this test run
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  The unique identifier of the test run
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current status of the test run: `queued`, `running`, `completed`, `failed`, `timeout`
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp of when the test run was created
+</ResponseField>
+
+<ResponseField name="started_at" type="string">
+  ISO 8601 timestamp of when the test run started executing
+</ResponseField>
+
+<ResponseField name="test" type="object">
+  <Expandable title="properties">
+    <ResponseField name="id" type="string">
+      The test identifier
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      The test name
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="agent" type="object">
+  <Expandable title="properties">
+    <ResponseField name="id" type="string">
+      The agent identifier
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      The agent name
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X POST https://api.tryiris.dev/api/v1/test-runs \
+  -H "Authorization: Bearer ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "test_id": "tst_1a2b3c4d5e",
+    "agent_id": "agt_7f8d9e2a1b3c",
+    "environment": "staging",
+    "configuration": {
+      "timeout": 300,
+      "retry_count": 2,
+      "parallel_steps": true,
+      "screenshot_on_failure": true,
+      "video_recording": true
+    },
+    "variables": {
+      "USER_EMAIL": "test@example.com",
+      "PRODUCT_SKU": "DEMO-123"
+    }
+  }'
+```
+
+## Example Response
+
+```json
+{
+  "id": "run_2f3e4d5c6b",
+  "status": "queued",
+  "created_at": "2024-01-20T14:00:00Z",
+  "started_at": null,
+  "test": {
+    "id": "tst_1a2b3c4d5e",
+    "name": "Product Purchase Flow"
+  },
+  "agent": {
+    "id": "agt_7f8d9e2a1b3c",
+    "name": "e2e-test-agent"
+  },
+  "configuration": {
+    "timeout": 300,
+    "retry_count": 2,
+    "parallel_steps": true,
+    "screenshot_on_failure": true,
+    "video_recording": true
+  },
+  "variables": {
+    "USER_EMAIL": "test@example.com",
+    "PRODUCT_SKU": "DEMO-123"
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="400 Bad Request" type="object">
+  Invalid request body or parameters
+  ```json
+  {
+    "error": "invalid_request",
+    "message": "Invalid test_id provided"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="404 Not Found" type="object">
+  Test or agent not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Test not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="409 Conflict" type="object">
+  Agent is busy or unavailable
+  ```json
+  {
+    "error": "conflict",
+    "message": "Agent is currently executing another test"
+  }
+  ```
+</ResponseField> 

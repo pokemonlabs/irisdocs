@@ -1,0 +1,69 @@
+---
+title: 'Delete Agent'
+api: 'DELETE /api/v1/agents/{agent_id}'
+description: 'Delete an existing agent'
+---
+
+## Path Parameters
+
+<ParamField path="agent_id" type="string" required>
+  The unique identifier of the agent to delete
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the deletion was successful
+</ResponseField>
+
+<ResponseField name="deleted_at" type="string">
+  ISO 8601 timestamp of when the agent was deleted
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X DELETE https://api.tryiris.dev/api/v1/agents/agt_7f8d9e2a1b3c \
+  -H "Authorization: Bearer ${API_KEY}"
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "deleted_at": "2024-01-20T10:15:00Z"
+}
+```
+
+## Error Responses
+
+<ResponseField name="404 Not Found" type="object">
+  Agent not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Agent not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="409 Conflict" type="object">
+  Agent cannot be deleted
+  ```json
+  {
+    "error": "conflict",
+    "message": "Agent is currently in use by active tests"
+  }
+  ```
+</ResponseField> 

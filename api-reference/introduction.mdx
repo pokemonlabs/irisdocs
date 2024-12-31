@@ -1,33 +1,95 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'API Reference'
+description: 'Complete API reference for Iris QA'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Introduction
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
-
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+Welcome to the Iris QA API reference. Our API follows RESTful principles and uses JSON for request and response bodies. All API endpoints are served over HTTPS and are accessible at `https://api.tryiris.dev`.
 
 ## Authentication
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All API requests require authentication using an API key. You can obtain your API key from the [Iris QA Dashboard](https://app.tryiris.dev/settings/api-keys).
+
+Include your API key in the `Authorization` header of all requests:
+
+```bash
+Authorization: Bearer your_api_key_here
+```
+
+## Base URL
+
+```bash
+https://api.tryiris.dev
+```
+
+## API Versioning
+
+The current version of the API is `v1`. Include the version in the URL path:
+
+```bash
+https://api.tryiris.dev/api/v1/
+```
+
+## Rate Limiting
+
+The API implements rate limiting based on your subscription tier:
+- Free tier: 100 requests per minute
+- Pro tier: 1000 requests per minute
+- Enterprise tier: Custom limits
+
+Rate limit information is included in the response headers:
+- `X-RateLimit-Limit`: Total requests allowed per window
+- `X-RateLimit-Remaining`: Remaining requests in current window
+- `X-RateLimit-Reset`: Time when the rate limit resets (Unix timestamp)
+
+## Response Format
+
+All responses are returned in JSON format. Successful responses have a 2xx status code and contain the requested data. Error responses have a 4xx or 5xx status code and include error details.
+
+### Success Response Format
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
+{
+  "data": {
+    // Response data
+  },
+  "meta": {
+    // Metadata like pagination info
   }
-]
+}
+```
+
+### Error Response Format
+
+```json
+{
+  "error": {
+    "code": "error_code",
+    "message": "Human readable error message",
+    "details": {
+      // Additional error details
+    }
+  }
+}
+```
+
+## Pagination
+
+List endpoints support pagination using the following query parameters:
+- `page`: Page number (default: 1)
+- `per_page`: Items per page (default: 20, max: 100)
+
+Pagination metadata is included in the response:
+
+```json
+{
+  "data": [...],
+  "meta": {
+    "current_page": 1,
+    "per_page": 20,
+    "total_pages": 5,
+    "total_items": 100
+  }
+}
 ```

@@ -1,0 +1,128 @@
+---
+title: 'Get Project'
+api: 'GET /api/v1/projects/{project_id}'
+description: 'Retrieve details of a specific project'
+---
+
+## Path Parameters
+
+<ParamField path="project_id" type="string" required>
+  The unique identifier of the project to retrieve
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  The unique identifier of the project
+</ResponseField>
+
+<ResponseField name="name" type="string">
+  The name of the project
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  The project description
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp of when the project was created
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  ISO 8601 timestamp of when the project was last updated
+</ResponseField>
+
+<ResponseField name="settings" type="object">
+  <Expandable title="properties">
+    <ResponseField name="base_url" type="string">
+      The base URL of the application being tested
+    </ResponseField>
+    <ResponseField name="default_timeout" type="integer">
+      Default timeout in seconds for test executions
+    </ResponseField>
+    <ResponseField name="environment" type="string">
+      Target environment
+    </ResponseField>
+    <ResponseField name="viewport" type="object">
+      Browser viewport settings
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="tags" type="array">
+  List of project tags
+</ResponseField>
+
+<ResponseField name="stats" type="object">
+  <Expandable title="properties">
+    <ResponseField name="total_tests" type="integer">
+      Total number of tests in the project
+    </ResponseField>
+    <ResponseField name="passing_tests" type="integer">
+      Number of passing tests
+    </ResponseField>
+    <ResponseField name="failing_tests" type="integer">
+      Number of failing tests
+    </ResponseField>
+    <ResponseField name="last_run_at" type="string">
+      ISO 8601 timestamp of the last test run
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example Request
+
+```bash
+curl https://api.tryiris.dev/api/v1/projects/prj_9a8b7c6d5e \
+  -H "Authorization: Bearer ${API_KEY}"
+```
+
+## Example Response
+
+```json
+{
+  "id": "prj_9a8b7c6d5e",
+  "name": "e-commerce-testing",
+  "description": "End-to-end testing for our e-commerce platform",
+  "created_at": "2024-01-20T11:00:00Z",
+  "updated_at": "2024-01-20T11:30:00Z",
+  "settings": {
+    "base_url": "https://shop.example.com",
+    "default_timeout": 45,
+    "environment": "staging",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    }
+  },
+  "tags": ["e-commerce", "web", "staging"],
+  "stats": {
+    "total_tests": 25,
+    "passing_tests": 23,
+    "failing_tests": 2,
+    "last_run_at": "2024-01-20T11:15:00Z"
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="404 Not Found" type="object">
+  Project not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Project not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField> 

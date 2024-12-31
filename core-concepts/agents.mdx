@@ -1,0 +1,97 @@
+---
+title: 'AI Agents'
+description: 'Understanding AI Agents in Iris QA'
+---
+
+## Overview
+
+AI Agents are the core of Iris QA's autonomous testing capabilities. These agents use advanced language models to understand, interact with, and test your user interfaces intelligently.
+
+## Supported AI Models
+
+<CardGroup>
+  <Card title="Google Vertex AI" icon="google">
+    Leverage Google's advanced AI models for precise UI testing and natural language understanding.
+  </Card>
+  <Card title="Amazon Bedrock" icon="aws">
+    Access multiple foundation models through Amazon's Bedrock service for diverse testing capabilities.
+  </Card>
+  <Card title="Anthropic Claude" icon="brain">
+    Utilize Claude's advanced reasoning capabilities for complex testing scenarios.
+  </Card>
+</CardGroup>
+
+## Agent Capabilities
+
+### 1. UI Understanding
+- Natural language processing of UI elements
+- Context-aware interaction with components
+- Dynamic element identification
+
+### 2. Test Generation
+- Automatic test case creation
+- Scenario identification
+- Edge case detection
+
+### 3. Self-Healing
+- Adaptive element location
+- UI change detection
+- Automatic test maintenance
+
+## Creating an Agent
+
+To create an agent, you'll need to:
+
+1. Choose an AI model provider
+2. Configure authentication
+3. Set up agent parameters
+4. Define testing scope
+
+For detailed API information, see the [Agent API Reference](/api-reference/agents/create).
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion icon="wand-magic-sparkles" title="Model Selection">
+    Choose your AI model based on your specific testing needs:
+    - Vertex AI for complex UI understanding
+    - Bedrock for multi-model flexibility
+    - Claude for advanced reasoning tasks
+  </Accordion>
+  <Accordion icon="gear" title="Configuration">
+    Optimize your agent's performance by:
+    - Setting appropriate timeout values
+    - Configuring retry mechanisms
+    - Defining clear test boundaries
+  </Accordion>
+  <Accordion icon="shield" title="Security">
+    Ensure secure agent operation by:
+    - Using environment variables for credentials
+    - Implementing proper access controls
+    - Regular security audits
+  </Accordion>
+</AccordionGroup>
+
+## Example Configuration
+
+```json
+{
+  "agent": {
+    "name": "e2e-test-agent",
+    "model": {
+      "provider": "vertex-ai",
+      "version": "text-bison-32k"
+    },
+    "configuration": {
+      "temperature": 0.7,
+      "max_tokens": 1024,
+      "timeout_seconds": 300
+    },
+    "capabilities": [
+      "ui-interaction",
+      "test-generation",
+      "self-healing"
+    ]
+  }
+}
+``` 

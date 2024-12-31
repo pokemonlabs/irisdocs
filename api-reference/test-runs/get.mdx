@@ -1,0 +1,151 @@
+---
+title: 'Get Test Run'
+api: 'GET /api/v1/test-runs/{test_run_id}'
+description: 'Retrieve details of a specific test run'
+---
+
+## Path Parameters
+
+<ParamField path="test_run_id" type="string" required>
+  The unique identifier of the test run to retrieve
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  The unique identifier of the test run
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current status of the test run: `queued`, `running`, `completed`, `failed`, `timeout`
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  ISO 8601 timestamp of when the test run was created
+</ResponseField>
+
+<ResponseField name="started_at" type="string">
+  ISO 8601 timestamp of when the test run started executing
+</ResponseField>
+
+<ResponseField name="completed_at" type="string">
+  ISO 8601 timestamp of when the test run completed
+</ResponseField>
+
+<ResponseField name="duration_ms" type="integer">
+  Total duration of the test run in milliseconds
+</ResponseField>
+
+<ResponseField name="test" type="object">
+  <Expandable title="properties">
+    <ResponseField name="id" type="string">
+      The test identifier
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      The test name
+    </ResponseField>
+    <ResponseField name="description" type="string">
+      The test description
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="agent" type="object">
+  <Expandable title="properties">
+    <ResponseField name="id" type="string">
+      The agent identifier
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      The agent name
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="results" type="object">
+  <Expandable title="properties">
+    <ResponseField name="total_steps" type="integer">
+      Total number of test steps
+    </ResponseField>
+    <ResponseField name="passed_steps" type="integer">
+      Number of passed steps
+    </ResponseField>
+    <ResponseField name="failed_steps" type="integer">
+      Number of failed steps
+    </ResponseField>
+    <ResponseField name="skipped_steps" type="integer">
+      Number of skipped steps
+    </ResponseField>
+    <ResponseField name="error_message" type="string">
+      Error message if the test run failed
+    </ResponseField>
+    <ResponseField name="screenshots" type="array">
+      List of screenshot URLs taken during the test run
+    </ResponseField>
+    <ResponseField name="video_url" type="string">
+      URL of the recorded test execution video
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example Request
+
+```bash
+curl https://api.tryiris.dev/api/v1/test-runs/run_2f3e4d5c6b \
+  -H "Authorization: Bearer ${API_KEY}"
+```
+
+## Example Response
+
+```json
+{
+  "id": "run_2f3e4d5c6b",
+  "status": "completed",
+  "created_at": "2024-01-20T14:00:00Z",
+  "started_at": "2024-01-20T14:00:05Z",
+  "completed_at": "2024-01-20T14:02:30Z",
+  "duration_ms": 145000,
+  "test": {
+    "id": "tst_1a2b3c4d5e",
+    "name": "Product Purchase Flow",
+    "description": "Verify end-to-end product purchase workflow"
+  },
+  "agent": {
+    "id": "agt_7f8d9e2a1b3c",
+    "name": "e2e-test-agent"
+  },
+  "results": {
+    "total_steps": 10,
+    "passed_steps": 9,
+    "failed_steps": 1,
+    "skipped_steps": 0,
+    "error_message": "Failed to complete payment: timeout",
+    "screenshots": [
+      "https://storage.tryiris.dev/screenshots/run_2f3e4d5c6b/step_8.png",
+      "https://storage.tryiris.dev/screenshots/run_2f3e4d5c6b/step_9_error.png"
+    ],
+    "video_url": "https://storage.tryiris.dev/videos/run_2f3e4d5c6b.mp4"
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="404 Not Found" type="object">
+  Test run not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Test run not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField> 

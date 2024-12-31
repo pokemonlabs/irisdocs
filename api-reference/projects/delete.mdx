@@ -1,0 +1,90 @@
+---
+title: 'Delete Project'
+api: 'DELETE /api/v1/projects/{project_id}'
+description: 'Delete an existing project and all its associated tests'
+---
+
+## Path Parameters
+
+<ParamField path="project_id" type="string" required>
+  The unique identifier of the project to delete
+</ParamField>
+
+## Query Parameters
+
+<ParamField query="force" type="boolean">
+  If true, forcefully delete the project even if it has active tests. Default: false
+</ParamField>
+
+## Response
+
+<ResponseField name="success" type="boolean">
+  Indicates if the deletion was successful
+</ResponseField>
+
+<ResponseField name="deleted_at" type="string">
+  ISO 8601 timestamp of when the project was deleted
+</ResponseField>
+
+<ResponseField name="deleted_resources" type="object">
+  <Expandable title="properties">
+    <ResponseField name="tests" type="integer">
+      Number of tests deleted
+    </ResponseField>
+    <ResponseField name="test_runs" type="integer">
+      Number of test runs deleted
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X DELETE "https://api.tryiris.dev/api/v1/projects/prj_9a8b7c6d5e?force=true" \
+  -H "Authorization: Bearer ${API_KEY}"
+```
+
+## Example Response
+
+```json
+{
+  "success": true,
+  "deleted_at": "2024-01-20T13:00:00Z",
+  "deleted_resources": {
+    "tests": 25,
+    "test_runs": 150
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="404 Not Found" type="object">
+  Project not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Project not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="409 Conflict" type="object">
+  Project has active tests and force is false
+  ```json
+  {
+    "error": "conflict",
+    "message": "Project has active tests. Use force=true to delete anyway"
+  }
+  ```
+</ResponseField> 

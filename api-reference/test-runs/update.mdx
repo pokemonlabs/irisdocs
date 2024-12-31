@@ -1,0 +1,146 @@
+---
+title: 'Update Test Run'
+api: 'PUT /api/v1/test-runs/{test_run_id}'
+description: 'Update a test run configuration or status'
+---
+
+## Path Parameters
+
+<ParamField path="test_run_id" type="string" required>
+  The unique identifier of the test run to update
+</ParamField>
+
+## Request Body
+
+<ParamField body="status" type="string">
+  Update the test run status. Only allowed values: `cancelled`, `paused`, `resumed`
+</ParamField>
+
+<ParamField body="configuration" type="object">
+  <Expandable title="properties">
+    <ParamField body="timeout" type="integer">
+      Update test execution timeout in seconds
+    </ParamField>
+    <ParamField body="retry_count" type="integer">
+      Update number of retry attempts for failed steps
+    </ParamField>
+    <ParamField body="parallel_steps" type="boolean">
+      Update parallel execution setting
+    </ParamField>
+    <ParamField body="screenshot_on_failure" type="boolean">
+      Update screenshot capture setting
+    </ParamField>
+    <ParamField body="video_recording" type="boolean">
+      Update video recording setting
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="variables" type="object">
+  Update environment variables for this test run
+</ParamField>
+
+## Response
+
+<ResponseField name="id" type="string">
+  The unique identifier of the test run
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Updated status of the test run
+</ResponseField>
+
+<ResponseField name="updated_at" type="string">
+  ISO 8601 timestamp of when the test run was updated
+</ResponseField>
+
+<ResponseField name="configuration" type="object">
+  Updated test run configuration
+</ResponseField>
+
+<ResponseField name="variables" type="object">
+  Updated environment variables
+</ResponseField>
+
+## Example Request
+
+```bash
+curl -X PUT https://api.tryiris.dev/api/v1/test-runs/run_2f3e4d5c6b \
+  -H "Authorization: Bearer ${API_KEY}" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "paused",
+    "configuration": {
+      "timeout": 600,
+      "retry_count": 3
+    },
+    "variables": {
+      "DEBUG_MODE": "true"
+    }
+  }'
+```
+
+## Example Response
+
+```json
+{
+  "id": "run_2f3e4d5c6b",
+  "status": "paused",
+  "created_at": "2024-01-20T14:00:00Z",
+  "updated_at": "2024-01-20T14:15:00Z",
+  "configuration": {
+    "timeout": 600,
+    "retry_count": 3,
+    "parallel_steps": true,
+    "screenshot_on_failure": true,
+    "video_recording": true
+  },
+  "variables": {
+    "USER_EMAIL": "test@example.com",
+    "PRODUCT_SKU": "DEMO-123",
+    "DEBUG_MODE": "true"
+  }
+}
+```
+
+## Error Responses
+
+<ResponseField name="400 Bad Request" type="object">
+  Invalid request body or parameters
+  ```json
+  {
+    "error": "invalid_request",
+    "message": "Invalid status transition"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="404 Not Found" type="object">
+  Test run not found
+  ```json
+  {
+    "error": "not_found",
+    "message": "Test run not found"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="401 Unauthorized" type="object">
+  Missing or invalid API key
+  ```json
+  {
+    "error": "unauthorized",
+    "message": "Invalid API key provided"
+  }
+  ```
+</ResponseField>
+
+<ResponseField name="409 Conflict" type="object">
+  Invalid state transition
+  ```json
+  {
+    "error": "conflict",
+    "message": "Cannot pause a completed test run"
+  }
+  ```
+</ResponseField> 
