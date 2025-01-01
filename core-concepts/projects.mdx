@@ -3,82 +3,132 @@ title: 'Projects'
 description: 'Organizing Your Testing Workflow with Projects'
 ---
 
-# Projects
-
-Projects in Iris represent individual applications or websites that need to be tested. They serve as organizational units that group related tests, agents, and test runs together.
+<Note>
+  Projects in Iris represent individual applications or websites that need to be tested. They serve as organizational units that group related tests, agents, and test runs together.
+</Note>
 
 ## Understanding Projects
 
-A project in Iris typically represents:
-- A single web application
-- A collection of related web services
-- A specific testing environment
-- A distinct testing initiative
+<CardGroup cols={2}>
+  <Card title="Web Applications" icon="browser">
+    Test complete web applications end-to-end
+  </Card>
+  <Card title="Service Collections" icon="microchip">
+    Manage related web services testing
+  </Card>
+  <Card title="Test Environments" icon="server">
+    Organize different testing environments
+  </Card>
+  <Card title="Testing Initiatives" icon="flag">
+    Group related testing objectives
+  </Card>
+</CardGroup>
 
 ## Project Structure
 
-### Components
-- **Tests**: Collection of all test cases for the application
-- **Agents**: Associated LLM agents configured for testing
-- **Test Runs**: Historical record of all test executions
-- **Settings**: Project-specific configurations
-
-## Project Management
-
-### Creation and Setup
-1. Define project details
-2. Configure testing environment
-3. Set up access permissions
-4. Add team members (if applicable)
-
-### Organization
-- **Logical Grouping**: Keep related tests together
-- **Environment Separation**: Maintain different projects for development, staging, and production
-- **Version Control**: Track changes and updates to tests
+<Tabs>
+  <Tab title="Components">
+    <CardGroup cols={2}>
+      <Card title="Tests" icon="vial">
+        Collection of all test cases
+      </Card>
+      <Card title="Agents" icon="robot">
+        Associated LLM testing agents
+      </Card>
+      <Card title="Test Runs" icon="play">
+        Historical execution records
+      </Card>
+      <Card title="Settings" icon="gear">
+        Project configurations
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="Management">
+    <Steps>
+      <Step title="Create Project">
+        Define project details and scope
+      </Step>
+      <Step title="Configure Environment">
+        Set up testing environment parameters
+      </Step>
+      <Step title="Set Permissions">
+        Configure access controls
+      </Step>
+      <Step title="Add Team">
+        Invite and organize team members
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
 
 ## Project Settings
 
-### Configuration Options
-- Test environment URLs
-- Default agent settings
-- Notification preferences
-- Integration settings
-
-### Access Control
-- User roles and permissions
-- API key management
-- Authentication settings
+<AccordionGroup>
+  <Accordion title="Configuration" icon="sliders">
+    ### Basic Settings
+    <Check>Environment URLs and endpoints</Check>
+    <Check>Default agent configurations</Check>
+    <Check>Notification preferences</Check>
+    <Check>Integration settings</Check>
+  </Accordion>
+  
+  <Accordion title="Access Control" icon="lock">
+    ### Security Settings
+    <Check>User roles and permissions</Check>
+    <Check>API key management</Check>
+    <Check>Authentication configuration</Check>
+  </Accordion>
+</AccordionGroup>
 
 ## Best Practices
 
-1. **Project Structure**
-   - Use clear, descriptive project names
-   - Maintain organized test hierarchies
-   - Document project specifications
-
-2. **Management**
-   - Regular project audits
-   - Clean up unused resources
-   - Keep configurations updated
-
-3. **Collaboration**
-   - Share project access appropriately
-   - Maintain testing documentation
-   - Set up proper notification channels
+<CardGroup cols={3}>
+  <Card title="Structure" icon="folder-tree">
+    <Check>Clear project naming</Check>
+    <Check>Organized hierarchies</Check>
+    <Check>Documented specs</Check>
+  </Card>
+  
+  <Card title="Management" icon="list-check">
+    <Check>Regular audits</Check>
+    <Check>Resource cleanup</Check>
+    <Check>Updated configs</Check>
+  </Card>
+  
+  <Card title="Collaboration" icon="users">
+    <Check>Proper access sharing</Check>
+    <Check>Documentation</Check>
+    <Check>Communication</Check>
+  </Card>
+</CardGroup>
 
 ## Use Cases
 
-### Single Application Testing
-- Complete end-to-end testing suite
-- Regression testing setup
-- Performance monitoring
-
-### Multi-Environment Testing
-- Development environment checks
-- Staging environment validation
-- Production monitoring
-
-### Team Collaboration
-- Shared test resources
-- Coordinated test execution
-- Centralized result tracking 
+<Tabs>
+  <Tab title="Single App">
+    ### Application Testing
+    <Frame>
+      <Check>Complete end-to-end testing suite</Check>
+      <Check>Regression testing setup</Check>
+      <Check>Performance monitoring</Check>
+    </Frame>
+  </Tab>
+  
+  <Tab title="Multi-Environment">
+    ### Environment Testing
+    <Frame>
+      <Check>Development checks</Check>
+      <Check>Staging validation</Check>
+      <Check>Production monitoring</Check>
+    </Frame>
+  </Tab>
+  
+  <Tab title="Team">
+    ### Collaboration
+    <Frame>
+      <Check>Shared test resources</Check>
+      <Check>Coordinated execution</Check>
+      <Check>Centralized tracking</Check>
+    </Frame>
+  </Tab>
+</Tabs> 

@@ -3,106 +3,154 @@ title: 'Tests'
 description: 'Creating and Managing Automated Tests in Iris'
 ---
 
-# Tests
-
-Tests in Iris are intelligent workflows that define how agents should interact with and validate your web application. They combine AI-powered navigation with specific validation criteria to ensure your application works as expected.
+<Note>
+  Tests in Iris are intelligent workflows that define how agents should interact with and validate your web application. They combine AI-powered navigation with specific validation criteria to ensure your application works as expected.
+</Note>
 
 ## Test Structure
 
-### Components
-- **Instructions**: Natural language descriptions of test objectives
-- **Validation Points**: Specific elements or states to verify
-- **Success Criteria**: Conditions that determine test passage
-- **Agent Configuration**: Specific settings for test execution
+<CardGroup cols={2}>
+  <Card title="Instructions" icon="message">
+    Natural language descriptions of test objectives
+  </Card>
+  <Card title="Validation" icon="check-double">
+    Specific elements and states to verify
+  </Card>
+  <Card title="Success Criteria" icon="trophy">
+    Conditions for test passage
+  </Card>
+  <Card title="Agent Config" icon="gear">
+    Test-specific agent settings
+  </Card>
+</CardGroup>
 
 ## Types of Tests
 
-### 1. User Journey Tests
-- Simulate complete user workflows
-- Validate multi-step processes
-- Test complex user interactions
-
-### 2. Functional Tests
-- Feature validation
-- Input/output verification
-- Error handling checks
-
-### 3. Visual Tests
-- UI component verification
-- Layout validation
-- Responsive design testing
+<Tabs>
+  <Tab title="User Journey">
+    <Frame>
+      ### User Journey Tests
+      <Check>Complete workflow simulation</Check>
+      <Check>Multi-step process validation</Check>
+      <Check>Complex interaction testing</Check>
+    </Frame>
+  </Tab>
+  <Tab title="Functional">
+    <Frame>
+      ### Functional Tests
+      <Check>Feature validation</Check>
+      <Check>Input/output verification</Check>
+      <Check>Error handling checks</Check>
+    </Frame>
+  </Tab>
+  <Tab title="Visual">
+    <Frame>
+      ### Visual Tests
+      <Check>UI component verification</Check>
+      <Check>Layout validation</Check>
+      <Check>Responsive design testing</Check>
+    </Frame>
+  </Tab>
+</Tabs>
 
 ## Test Creation
 
-### Manual Creation
-1. Define test objectives
-2. Specify test steps
-3. Set validation criteria
-4. Configure agent behavior
-
-### AI-Assisted Creation
-- Automatic test generation from user stories
-- Smart path discovery
-- Edge case identification
+<AccordionGroup>
+  <Accordion title="Manual Creation" icon="hand">
+    <Steps>
+      <Step title="Define Objectives">
+        Specify what needs to be tested
+      </Step>
+      <Step title="Test Steps">
+        Detail the sequence of actions
+      </Step>
+      <Step title="Validation">
+        Set up success criteria
+      </Step>
+      <Step title="Configuration">
+        Configure agent behavior
+      </Step>
+    </Steps>
+  </Accordion>
+  
+  <Accordion title="AI-Assisted" icon="wand-magic-sparkles">
+    ### Automated Features
+    <Check>Test generation from user stories</Check>
+    <Check>Intelligent path discovery</Check>
+    <Check>Edge case identification</Check>
+  </Accordion>
+</AccordionGroup>
 
 ## Test Configuration
 
-### Basic Settings
-- Test name and description
-- Target URLs
-- Timeout settings
-- Retry policies
-
-### Advanced Options
-- Custom validation rules
-- Environmental variables
-- Pre/post test actions
-- Data dependencies
-
-## Best Practices
-
-### 1. Test Design
-- Write clear test objectives
-- Include comprehensive validation points
-- Handle edge cases
-- Maintain test independence
-
-### 2. Maintenance
-- Regular test reviews
-- Update tests for UI changes
-- Document test modifications
-- Version control integration
-
-### 3. Organization
-- Logical test grouping
-- Clear naming conventions
-- Proper test categorization
-- Priority labeling
+<Tabs>
+  <Tab title="Basic Settings">
+    <CardGroup cols={2}>
+      <Card title="Test Info" icon="info">
+        Name, description, and basic details
+      </Card>
+      <Card title="URLs" icon="link">
+        Target endpoints and paths
+      </Card>
+      <Card title="Timeouts" icon="clock">
+        Execution time limits
+      </Card>
+      <Card title="Retries" icon="rotate">
+        Failure handling policies
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="Advanced">
+    <CardGroup cols={2}>
+      <Card title="Validation Rules" icon="check-double">
+        Custom success criteria
+      </Card>
+      <Card title="Environment" icon="server">
+        Variable configurations
+      </Card>
+      <Card title="Hooks" icon="plug">
+        Pre/post test actions
+      </Card>
+      <Card title="Dependencies" icon="diagram-project">
+        Test dependencies
+      </Card>
+    </CardGroup>
+  </Tab>
+</Tabs>
 
 ## Autonomous Mode
 
-### Features
-- Self-healing test steps
-- Dynamic path finding
-- Intelligent error recovery
-- Automatic report generation
+<CardGroup cols={2}>
+  <Card title="Features" icon="robot">
+    ### Key Capabilities
+    <Check>Self-healing steps</Check>
+    <Check>Dynamic navigation</Check>
+    <Check>Error recovery</Check>
+  </Card>
+  <Card title="Configuration" icon="sliders">
+    ### Settings
+    <Check>Autonomy levels</Check>
+    <Check>Decision boundaries</Check>
+    <Check>Reporting preferences</Check>
+  </Card>
+</CardGroup>
 
-### Configuration
-- Autonomy levels
-- Decision boundaries
-- Fallback behaviors
-- Reporting preferences
+## Analytics
 
-## Test Analytics
-
-### Available Metrics
-- Success/failure rates
-- Execution time
-- Error patterns
-- Coverage analysis
-
-### Reporting
-- Detailed test results
-- Visual evidence
-- Performance metrics
-- Trend analysis 
+<AccordionGroup>
+  <Accordion title="Metrics" icon="chart-line">
+    ### Key Measurements
+    <Check>Success/failure rates</Check>
+    <Check>Execution duration</Check>
+    <Check>Error patterns</Check>
+    <Check>Coverage analysis</Check>
+  </Accordion>
+  
+  <Accordion title="Reporting" icon="file-lines">
+    ### Available Reports
+    <Check>Detailed test results</Check>
+    <Check>Visual evidence</Check>
+    <Check>Performance data</Check>
+    <Check>Trend analysis</Check>
+  </Accordion>
+</AccordionGroup> 

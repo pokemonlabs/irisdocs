@@ -3,128 +3,163 @@ title: 'Test Runs'
 description: 'Understanding Test Execution and Results in Iris'
 ---
 
-# Test Runs
-
-Test runs represent individual executions of tests by Iris agents. Each test run captures the complete journey of a test, including interactions, validations, and results.
+<Note>
+  Test runs represent individual executions of tests by Iris agents. Each test run captures the complete journey of a test, including interactions, validations, and results.
+</Note>
 
 ## Understanding Test Runs
 
-A test run includes:
-- Complete execution history
-- Agent interactions and decisions
-- Screenshots and recordings
-- Performance metrics
-- Test results and outcomes
+<CardGroup cols={2}>
+  <Card title="Execution History" icon="clock-rotate-left">
+    Complete record of test progression
+  </Card>
+  <Card title="Agent Activity" icon="robot">
+    Detailed agent interactions and decisions
+  </Card>
+  <Card title="Visual Evidence" icon="camera">
+    Screenshots and recordings
+  </Card>
+  <Card title="Results" icon="chart-simple">
+    Performance metrics and outcomes
+  </Card>
+</CardGroup>
 
 ## Test Run Lifecycle
 
-### 1. Initialization
-- Agent preparation
-- Environment setup
-- Resource allocation
-- Configuration loading
-
-### 2. Execution
-- Step-by-step progression
-- Real-time monitoring
-- Error handling
-- State management
-
-### 3. Completion
-- Result compilation
-- Resource cleanup
-- Report generation
-- Notification dispatch
+<Steps>
+  <Step title="Initialization">
+    <Check>Agent preparation</Check>
+    <Check>Environment setup</Check>
+    <Check>Resource allocation</Check>
+    <Check>Configuration loading</Check>
+  </Step>
+  <Step title="Execution">
+    <Check>Step-by-step progression</Check>
+    <Check>Real-time monitoring</Check>
+    <Check>Error handling</Check>
+    <Check>State management</Check>
+  </Step>
+  <Step title="Completion">
+    <Check>Result compilation</Check>
+    <Check>Resource cleanup</Check>
+    <Check>Report generation</Check>
+    <Check>Notification dispatch</Check>
+  </Step>
+</Steps>
 
 ## Test Run Data
 
-### Captured Information
-- Execution timestamps
-- Agent actions
-- System responses
-- Visual evidence
-- Performance metrics
-- Error logs
-
-### Analytics
-- Success/failure status
-- Execution duration
-- Resource usage
-- Error patterns
-- Coverage metrics
+<Tabs>
+  <Tab title="Captured Info">
+    <CardGroup cols={2}>
+      <Card title="Timing" icon="clock">
+        Execution timestamps and duration
+      </Card>
+      <Card title="Actions" icon="play">
+        Detailed agent activities
+      </Card>
+      <Card title="Responses" icon="reply">
+        System feedback and states
+      </Card>
+      <Card title="Evidence" icon="image">
+        Visual proof and logs
+      </Card>
+    </CardGroup>
+  </Tab>
+  <Tab title="Analytics">
+    <Frame>
+      ### Key Metrics
+      <Check>Success/failure status tracking</Check>
+      <Check>Execution time analysis</Check>
+      <Check>Resource utilization stats</Check>
+      <Check>Error pattern detection</Check>
+      <Check>Coverage measurements</Check>
+    </Frame>
+  </Tab>
+</Tabs>
 
 ## Real-time Monitoring
 
-### Available Features
-- Live progress tracking
-- Agent activity monitoring
-- Error detection
-- Performance analysis
-
-### Intervention Options
-- Pause execution
-- Manual override
-- Debug mode
-- Emergency stop
+<CardGroup cols={2}>
+  <Card title="Monitoring Features" icon="desktop">
+    ### Live Tracking
+    <Check>Progress monitoring</Check>
+    <Check>Agent activity tracking</Check>
+    <Check>Error detection</Check>
+    <Check>Performance analysis</Check>
+  </Card>
+  <Card title="Control Options" icon="gamepad">
+    ### Interventions
+    <Check>Pause execution</Check>
+    <Check>Manual override</Check>
+    <Check>Debug mode</Check>
+    <Check>Emergency stop</Check>
+  </Card>
+</CardGroup>
 
 ## Results and Reporting
 
-### Test Run Reports
-- Detailed execution logs
-- Visual evidence collection
-- Performance analytics
-- Error summaries
-
-### Integration Options
-- CI/CD pipeline integration
-- Notification systems
-- Analytics platforms
-- Issue tracking systems
-
-## Best Practices
-
-### 1. Execution Management
-- Schedule runs appropriately
-- Monitor resource usage
-- Set up alerts
-- Maintain execution logs
-
-### 2. Analysis
-- Regular result review
-- Trend analysis
-- Performance optimization
-- Error pattern identification
-
-### 3. Maintenance
-- Clean up old runs
-- Archive important results
-- Update configurations
-- Optimize resource usage
+<AccordionGroup>
+  <Accordion title="Test Reports" icon="file-lines">
+    ### Available Reports
+    <Check>Detailed execution logs</Check>
+    <Check>Visual evidence collection</Check>
+    <Check>Performance analytics</Check>
+    <Check>Error summaries</Check>
+  </Accordion>
+  
+  <Accordion title="Integrations" icon="plug">
+    ### Connected Systems
+    <Check>CI/CD pipeline integration</Check>
+    <Check>Notification systems</Check>
+    <Check>Analytics platforms</Check>
+    <Check>Issue tracking systems</Check>
+  </Accordion>
+</AccordionGroup>
 
 ## Troubleshooting
 
-### Common Issues
-- Failed executions
-- Timeout problems
-- Resource constraints
-- Integration errors
-
-### Resolution Steps
-- Error analysis
-- Log inspection
-- Configuration review
-- Agent diagnostics
+<Tabs>
+  <Tab title="Common Issues">
+    <Frame>
+      ### Known Problems
+      <Check>Failed executions</Check>
+      <Check>Timeout issues</Check>
+      <Check>Resource constraints</Check>
+      <Check>Integration errors</Check>
+    </Frame>
+  </Tab>
+  <Tab title="Solutions">
+    <Steps>
+      <Step title="Analysis">
+        Investigate error logs and patterns
+      </Step>
+      <Step title="Diagnosis">
+        Review configurations and states
+      </Step>
+      <Step title="Resolution">
+        Apply fixes and verify solutions
+      </Step>
+      <Step title="Prevention">
+        Update procedures to prevent recurrence
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
 
 ## Historical Data
 
-### Storage
-- Result archival
-- Log retention
-- Evidence backup
-- Analytics preservation
-
-### Analysis Tools
-- Trend visualization
-- Performance graphs
-- Error rate tracking
-- Coverage mapping 
+<CardGroup cols={2}>
+  <Card title="Storage" icon="database">
+    ### Data Management
+    <Check>Result archival</Check>
+    <Check>Log retention</Check>
+    <Check>Evidence backup</Check>
+  </Card>
+  <Card title="Analysis" icon="magnifying-glass-chart">
+    ### Analytical Tools
+    <Check>Trend visualization</Check>
+    <Check>Performance graphs</Check>
+    <Check>Coverage mapping</Check>
+  </Card>
+</CardGroup> 
