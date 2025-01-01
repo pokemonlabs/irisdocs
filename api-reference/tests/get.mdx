@@ -1,182 +1,203 @@
 ---
 title: 'Get Test'
-api: 'GET /api/v1/tests/{test_id}'
-description: 'Retrieve details of a specific test'
+description: 'Retrieve details of a specific test by ID'
+api: 'GET https://app.tryiris.dev/api/trpc/test.findFirst'
+authentication: true
 ---
 
-## Path Parameters
+## Get Test Details
 
-<ParamField path="test_id" type="string" required>
+Retrieve detailed information about a specific test, including its project and creator details.
+
+### Headers
+
+<ParamField header="IRIS_ACCESS_TOKEN" type="string" required>
+  Your Iris API access token
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="id" type="string" required>
   The unique identifier of the test to retrieve
 </ParamField>
 
-## Response
+<ParamField query="include" type="object">
+  Specify related data to include in the response
+  
+  <Expandable title="Include Object Properties">
+    <ParamField query="project" type="boolean">
+      Include project details
+    </ParamField>
+    <ParamField query="createdBy" type="boolean">
+      Include creator details
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Response
+
+Returns the test details along with included relations if specified.
 
 <ResponseField name="id" type="string">
-  The unique identifier of the test
-</ResponseField>
-
-<ResponseField name="project_id" type="string">
-  The project identifier
+  Unique identifier of the test
 </ResponseField>
 
 <ResponseField name="name" type="string">
-  The name of the test
+  Name of the test
 </ResponseField>
 
 <ResponseField name="description" type="string">
-  The test description
+  Description of the test
 </ResponseField>
 
-<ResponseField name="created_at" type="string">
-  ISO 8601 timestamp of when the test was created
+<ResponseField name="url" type="string">
+  Target URL for the test
 </ResponseField>
 
-<ResponseField name="updated_at" type="string">
-  ISO 8601 timestamp of when the test was last updated
+<ResponseField name="naturalLanguageInput" type="string">
+  Test steps in natural language format
 </ResponseField>
 
-<ResponseField name="steps" type="array">
-  <Expandable title="properties">
-    <ResponseField name="type" type="string">
-      Type of step
+<ResponseField name="status" type="string">
+  Current status of the test (e.g., "DRAFT")
+</ResponseField>
+
+<ResponseField name="isActive" type="boolean">
+  Whether the test is active
+</ResponseField>
+
+<ResponseField name="projectId" type="string">
+  ID of the associated project
+</ResponseField>
+
+<ResponseField name="createdById" type="string">
+  ID of the user who created the test
+</ResponseField>
+
+<ResponseField name="createdAt" type="date">
+  Timestamp when the test was created
+</ResponseField>
+
+<ResponseField name="updatedAt" type="date">
+  Timestamp when the test was last updated
+</ResponseField>
+
+<ResponseField name="project" type="object">
+  Project details if included
+  
+  <Expandable title="Project Properties">
+    <ResponseField name="id" type="string">
+      Project ID
+    </ResponseField>
+    <ResponseField name="name" type="string">
+      Project name
     </ResponseField>
     <ResponseField name="description" type="string">
-      Step description
+      Project description
     </ResponseField>
-    <ResponseField name="selector" type="string">
-      Element selector
+    <ResponseField name="cookies" type="object">
+      Project cookies configuration
     </ResponseField>
-    <ResponseField name="value" type="string">
-      Step value
+    <ResponseField name="session" type="object">
+      Project session configuration
     </ResponseField>
-    <ResponseField name="timeout" type="integer">
-      Step timeout
-    </ResponseField>
-    <ResponseField name="screenshot" type="boolean">
-      Screenshot setting
+    <ResponseField name="localStorage" type="object">
+      Project local storage configuration
     </ResponseField>
   </Expandable>
 </ResponseField>
 
-<ResponseField name="tags" type="array">
-  List of test tags
-</ResponseField>
-
-<ResponseField name="configuration" type="object">
-  <Expandable title="properties">
-    <ResponseField name="retry_on_failure" type="boolean">
-      Retry setting
+<ResponseField name="createdBy" type="object">
+  Creator details if included
+  
+  <Expandable title="Creator Properties">
+    <ResponseField name="id" type="string">
+      User ID
     </ResponseField>
-    <ResponseField name="max_retries" type="integer">
-      Maximum retries
+    <ResponseField name="name" type="string">
+      User's name
     </ResponseField>
-    <ResponseField name="retry_interval" type="integer">
-      Retry interval
+    <ResponseField name="email" type="string">
+      User's email
     </ResponseField>
-    <ResponseField name="timeout" type="integer">
-      Global timeout
+    <ResponseField name="pictureUrl" type="string">
+      URL of user's profile picture
     </ResponseField>
-  </Expandable>
-</ResponseField>
-
-<ResponseField name="stats" type="object">
-  <Expandable title="properties">
-    <ResponseField name="total_runs" type="integer">
-      Total number of test runs
+    <ResponseField name="status" type="string">
+      User's status
     </ResponseField>
-    <ResponseField name="success_rate" type="number">
-      Percentage of successful runs
-    </ResponseField>
-    <ResponseField name="avg_duration" type="number">
-      Average run duration in seconds
-    </ResponseField>
-    <ResponseField name="last_run" type="object">
-      Details of the most recent run
+    <ResponseField name="globalRole" type="string">
+      User's global role
     </ResponseField>
   </Expandable>
 </ResponseField>
 
-## Example Request
+<CodeGroup>
 
-```bash
-curl https://api.tryiris.dev/api/v1/tests/tst_1a2b3c4d5e \
-  -H "Authorization: Bearer ${API_KEY}"
+```bash Request Example
+curl 'https://app.tryiris.dev/api/trpc/test.findFirst' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <your-iris-token>' \
+  --data-raw '{
+    "0": {
+      "json": {
+        "where": {
+          "id": "c5147ecb-22d0-4704-9a30-932ebf28302f"
+        },
+        "include": {
+          "project": true,
+          "createdBy": true
+        }
+      }
+    }
+  }'
 ```
 
-## Example Response
-
-```json
+```json Response Example
 {
-  "id": "tst_1a2b3c4d5e",
-  "project_id": "prj_9a8b7c6d5e",
-  "name": "Product Purchase Flow",
-  "description": "Verify that users can successfully purchase a product",
-  "created_at": "2024-01-20T16:00:00Z",
-  "updated_at": "2024-01-20T16:30:00Z",
-  "steps": [
-    {
-      "type": "navigate",
-      "description": "Navigate to product page",
-      "value": "/products/demo-product"
-    },
-    {
-      "type": "click",
-      "description": "Click Add to Cart button",
-      "selector": "#add-to-cart-button"
-    },
-    {
-      "type": "wait",
-      "description": "Wait for cart update",
-      "selector": ".cart-count[data-count='1']",
-      "timeout": 5
-    },
-    {
-      "type": "assert",
-      "description": "Verify product added to cart",
-      "selector": ".cart-item",
-      "value": "Demo Product"
-    }
-  ],
-  "tags": ["e-commerce", "critical-path"],
-  "configuration": {
-    "retry_on_failure": true,
-    "max_retries": 3,
-    "retry_interval": 2,
-    "timeout": 300
-  },
-  "stats": {
-    "total_runs": 50,
-    "success_rate": 98.0,
-    "avg_duration": 45.5,
-    "last_run": {
-      "id": "run_2f3e4d5c6b",
-      "status": "completed",
-      "created_at": "2024-01-20T16:25:00Z",
-      "duration_ms": 43200
+  "result": {
+    "data": {
+      "json": {
+        "id": "c5147ecb-22d0-4704-9a30-932ebf28302f",
+        "name": "Login Flow",
+        "description": "This will test the login flow",
+        "url": "https://medx1.ai",
+        "naturalLanguageInput": "Goto https://medx1.ai\nClick on get started button\nUsername: medxtest@gmail.com, password: password\nOnce login is complete, Use the tool provided to use to submit your observations as steps.",
+        "status": "DRAFT",
+        "isActive": true,
+        "projectId": "d0a010ca-aa50-457b-9957-0d133d34886a",
+        "createdById": "21a857f1-ba5f-4435-bcf6-f910ec07c0dc",
+        "createdAt": "2024-12-23T09:01:34.146Z",
+        "updatedAt": "2024-12-24T08:10:25.532Z",
+        "project": {
+          "id": "d0a010ca-aa50-457b-9957-0d133d34886a",
+          "name": "test project",
+          "description": "This is a test project",
+          "cookies": {
+            "some": "cookie",
+            "another": "cookie"
+          },
+          "session": {
+            "some": "session",
+            "another": "session"
+          },
+          "localStorage": {
+            "some": "storage",
+            "another": "storage"
+          }
+        },
+        "createdBy": {
+          "id": "21a857f1-ba5f-4435-bcf6-f910ec07c0dc",
+          "name": "John Doe",
+          "email": "shanur.cse.nitap@gmail.com",
+          "pictureUrl": "https://i.imgur.com/sdjqd62.jpeg",
+          "status": "VERIFIED",
+          "globalRole": "ADMIN"
+        }
+      }
     }
   }
 }
 ```
 
-## Error Responses
-
-<ResponseField name="404 Not Found" type="object">
-  Test not found
-  ```json
-  {
-    "error": "not_found",
-    "message": "Test not found"
-  }
-  ```
-</ResponseField>
-
-<ResponseField name="401 Unauthorized" type="object">
-  Missing or invalid API key
-  ```json
-  {
-    "error": "unauthorized",
-    "message": "Invalid API key provided"
-  }
-  ```
-</ResponseField> 
+</CodeGroup>

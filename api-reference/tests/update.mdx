@@ -1,236 +1,165 @@
 ---
 title: 'Update Test'
-api: 'PUT /api/v1/tests/{test_id}'
 description: 'Update an existing test configuration'
+api: 'POST https://app.tryiris.dev/api/trpc/test.update'
+authentication: true
 ---
 
-## Path Parameters
+## Update Test
 
-<ParamField path="test_id" type="string" required>
+Update an existing test's configuration including name, description, URL, and test instructions.
+
+### Headers
+
+<ParamField header="IRIS_ACCESS_TOKEN" type="string" required>
+  Your Iris API access token
+</ParamField>
+
+### Body
+
+<ParamField body="where.id" type="string" required>
   The unique identifier of the test to update
 </ParamField>
 
-## Request Body
-
-<ParamField body="name" type="string">
+<ParamField body="data.name" type="string">
   New name for the test
 </ParamField>
 
-<ParamField body="description" type="string">
-  Updated test description
+<ParamField body="data.description" type="string">
+  Updated description of the test
 </ParamField>
 
-<ParamField body="steps" type="array">
-  <Expandable title="properties">
-    <ParamField body="type" type="string">
-      Type of step: `navigate`, `click`, `type`, `assert`, `wait`, `custom`
-    </ParamField>
-    <ParamField body="description" type="string">
-      Human-readable description of what the step does
-    </ParamField>
-    <ParamField body="selector" type="string">
-      CSS or XPath selector for element interaction steps
-    </ParamField>
-    <ParamField body="value" type="string">
-      Value to type or assert against
-    </ParamField>
-    <ParamField body="timeout" type="integer">
-      Step-specific timeout in seconds
-    </ParamField>
-    <ParamField body="screenshot" type="boolean">
-      Whether to capture a screenshot after this step
-    </ParamField>
-  </Expandable>
+<ParamField body="data.url" type="string">
+  The URL to be tested
 </ParamField>
 
-<ParamField body="tags" type="array">
-  Updated list of tags
+<ParamField body="data.naturalLanguageInput" type="string">
+  Test instructions in natural language
 </ParamField>
 
-<ParamField body="configuration" type="object">
-  <Expandable title="properties">
-    <ParamField body="retry_on_failure" type="boolean">
-      Whether to retry failed steps
-    </ParamField>
-    <ParamField body="max_retries" type="integer">
-      Maximum number of retries per step
-    </ParamField>
-    <ParamField body="retry_interval" type="integer">
-      Seconds to wait between retries
-    </ParamField>
-    <ParamField body="timeout" type="integer">
-      Global timeout for the test in seconds
-    </ParamField>
-  </Expandable>
+<ParamField body="data.isActive" type="boolean">
+  Whether the test is active
 </ParamField>
 
-## Response
+### Response
 
-<ResponseField name="id" type="string">
-  The unique identifier of the test
-</ResponseField>
+Returns the updated test configuration.
 
-<ResponseField name="name" type="string">
-  Updated name of the test
-</ResponseField>
+<CodeGroup>
 
-<ResponseField name="description" type="string">
-  Updated test description
-</ResponseField>
-
-<ResponseField name="updated_at" type="string">
-  ISO 8601 timestamp of when the test was updated
-</ResponseField>
-
-<ResponseField name="steps" type="array">
-  Updated array of test steps
-</ResponseField>
-
-<ResponseField name="tags" type="array">
-  Updated list of test tags
-</ResponseField>
-
-<ResponseField name="configuration" type="object">
-  Updated test configuration
-</ResponseField>
-
-## Example Request
-
-```bash
-curl -X PUT https://api.tryiris.dev/api/v1/tests/tst_1a2b3c4d5e \
-  -H "Authorization: Bearer ${API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Enhanced Product Purchase Flow",
-    "description": "Updated end-to-end product purchase test with additional validations",
-    "steps": [
-      {
-        "type": "navigate",
-        "description": "Navigate to product page",
-        "value": "/products/demo-product"
-      },
-      {
-        "type": "assert",
-        "description": "Verify product price",
-        "selector": ".product-price",
-        "value": "$99.99"
-      },
-      {
-        "type": "click",
-        "description": "Click Add to Cart button",
-        "selector": "#add-to-cart-button"
-      },
-      {
-        "type": "wait",
-        "description": "Wait for cart update",
-        "selector": ".cart-count[data-count='1']",
-        "timeout": 5
-      },
-      {
-        "type": "assert",
-        "description": "Verify product added to cart",
-        "selector": ".cart-item",
-        "value": "Demo Product"
-      }
-    ],
-    "tags": ["e-commerce", "critical-path", "purchase-flow"],
-    "configuration": {
-      "retry_on_failure": true,
-      "max_retries": 5,
-      "retry_interval": 3,
-      "timeout": 400
-    }
-  }'
-```
-
-## Example Response
-
-```json
+```json Request Body
 {
-  "id": "tst_1a2b3c4d5e",
-  "project_id": "prj_9a8b7c6d5e",
-  "name": "Enhanced Product Purchase Flow",
-  "description": "Updated end-to-end product purchase test with additional validations",
-  "created_at": "2024-01-20T16:00:00Z",
-  "updated_at": "2024-01-20T17:00:00Z",
-  "steps": [
-    {
-      "type": "navigate",
-      "description": "Navigate to product page",
-      "value": "/products/demo-product"
-    },
-    {
-      "type": "assert",
-      "description": "Verify product price",
-      "selector": ".product-price",
-      "value": "$99.99"
-    },
-    {
-      "type": "click",
-      "description": "Click Add to Cart button",
-      "selector": "#add-to-cart-button"
-    },
-    {
-      "type": "wait",
-      "description": "Wait for cart update",
-      "selector": ".cart-count[data-count='1']",
-      "timeout": 5
-    },
-    {
-      "type": "assert",
-      "description": "Verify product added to cart",
-      "selector": ".cart-item",
-      "value": "Demo Product"
+  "0": {
+    "json": {
+      "where": {
+        "id": "f7cee2e0-69bf-457e-a2e0-cd0dc0299dea"
+      },
+      "data": {
+        "name": "Pikachu",
+        "description": "This is to test that wikipedia's pikachu page is live",
+        "url": "https://en.wikipedia.org/wiki/Pikachu",
+        "naturalLanguageInput": "Goto google.com\nLook for : https://en.wikipedia.org/wiki/Pikachu\nFind the section: Conception and development\nIf the section is available, its success",
+        "isActive": true
+      }
     }
-  ],
-  "tags": ["e-commerce", "critical-path", "purchase-flow"],
-  "configuration": {
-    "retry_on_failure": true,
-    "max_retries": 5,
-    "retry_interval": 3,
-    "timeout": 400
   }
 }
 ```
 
-## Error Responses
-
-<ResponseField name="400 Bad Request" type="object">
-  Invalid request body or parameters
-  ```json
-  {
-    "error": "invalid_request",
-    "message": "Invalid step configuration"
+```bash Request Example
+curl -X POST 'https://app.tryiris.dev/api/trpc/test.update' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <your-iris-token>' \
+  -d @- << EOF
+{
+  "0": {
+    "json": {
+      "where": {
+        "id": "<test-id>"
+      },
+      "data": {
+        "name": "Test Name",
+        "description": "Test Description",
+        "url": "https://example.com",
+        "naturalLanguageInput": "Test instructions",
+        "isActive": true
+      }
+    }
   }
-  ```
+}
+EOF
+```
+
+</CodeGroup>
+
+<ResponseExample>
+```json Response
+[
+  {
+    "result": {
+      "data": {
+        "json": {
+          "id": "f7cee2e0-69bf-457e-a2e0-cd0dc0299dea",
+          "name": "Pikachu",
+          "description": "This is to test that wikipedia's pikachu page is live",
+          "url": "https://en.wikipedia.org/wiki/Pikachu",
+          "naturalLanguageInput": "Goto google.com\nLook for : https://en.wikipedia.org/wiki/Pikachu\nFind the section: Conception and development\nIf the section is available, its success",
+          "status": "DRAFT",
+          "isActive": true,
+          "projectId": "e52a06ec-6a16-4ae1-9a06-75cab17423c5",
+          "createdById": "21a857f1-ba5f-4435-bcf6-f910ec07c0dc",
+          "createdAt": "2025-01-01T08:43:07.964Z",
+          "updatedAt": "2025-01-01T08:45:45.728Z"
+        }
+      }
+    }
+  }
+]
+```
+</ResponseExample>
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier of the test
 </ResponseField>
 
-<ResponseField name="404 Not Found" type="object">
-  Test not found
-  ```json
-  {
-    "error": "not_found",
-    "message": "Test not found"
-  }
-  ```
+<ResponseField name="name" type="string">
+  Name of the test
 </ResponseField>
 
-<ResponseField name="401 Unauthorized" type="object">
-  Missing or invalid API key
-  ```json
-  {
-    "error": "unauthorized",
-    "message": "Invalid API key provided"
-  }
-  ```
+<ResponseField name="description" type="string">
+  Description of the test
 </ResponseField>
 
-<ResponseField name="409 Conflict" type="object">
-  Test name already exists
-  ```json
-  {
-    "error": "conflict",
-    "message": "Test name already exists in this project"
-  }
-  ```
-</ResponseField> 
+<ResponseField name="url" type="string">
+  URL being tested
+</ResponseField>
+
+<ResponseField name="naturalLanguageInput" type="string">
+  Test instructions in natural language
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Current status of the test
+</ResponseField>
+
+<ResponseField name="isActive" type="boolean">
+  Whether the test is active
+</ResponseField>
+
+<ResponseField name="projectId" type="string">
+  ID of the project this test belongs to
+</ResponseField>
+
+<ResponseField name="createdById" type="string">
+  ID of the user who created the test
+</ResponseField>
+
+<ResponseField name="createdAt" type="date">
+  Timestamp when the test was created
+</ResponseField>
+
+<ResponseField name="updatedAt" type="date">
+  Timestamp when the test was last updated
+</ResponseField>

@@ -1,98 +1,136 @@
 ---
 title: 'Delete Test'
-api: 'DELETE /api/v1/tests/{test_id}'
-description: 'Delete an existing test and its associated test runs'
+description: 'Delete an existing test from your project'
+api: 'POST https://app.tryiris.dev/api/trpc/test.delete'
+authentication: true
 ---
 
-## Path Parameters
+## Delete Test
 
-<ParamField path="test_id" type="string" required>
-  The unique identifier of the test to delete
+Delete a specific test by its ID.
+
+### Headers
+
+<ParamField header="IRIS_ACCESS_TOKEN" type="string" required>
+  Your Iris API access token
 </ParamField>
 
-## Query Parameters
+### Body
 
-<ParamField query="force" type="boolean">
-  If true, forcefully delete the test even if it has active runs. Default: false
-</ParamField>
-
-<ParamField query="delete_runs" type="boolean">
-  If true, also delete all associated test runs. Default: true
-</ParamField>
-
-## Response
-
-<ResponseField name="success" type="boolean">
-  Indicates if the deletion was successful
-</ResponseField>
-
-<ResponseField name="deleted_at" type="string">
-  ISO 8601 timestamp of when the test was deleted
-</ResponseField>
-
-<ResponseField name="deleted_resources" type="object">
-  <Expandable title="properties">
-    <ResponseField name="test_runs" type="integer">
-      Number of test runs deleted
-    </ResponseField>
-    <ResponseField name="screenshots" type="integer">
-      Number of screenshots deleted
-    </ResponseField>
-    <ResponseField name="videos" type="integer">
-      Number of videos deleted
-    </ResponseField>
+<ParamField body="where" type="object" required>
+  Query parameters to identify the test
+  <Expandable title="Toggle object">
+    <ParamField body="id" type="string" required>
+      The unique identifier of the test to delete
+    </ParamField>
   </Expandable>
-</ResponseField>
+</ParamField>
 
-## Example Request
+### Response
 
-```bash
-curl -X DELETE "https://api.tryiris.dev/api/v1/tests/tst_1a2b3c4d5e?force=true&delete_runs=true" \
-  -H "Authorization: Bearer ${API_KEY}"
-```
+Returns the deleted test details upon success.
 
-## Example Response
+<CodeGroup>
 
-```json
+```json Request Body
 {
-  "success": true,
-  "deleted_at": "2024-01-20T18:00:00Z",
-  "deleted_resources": {
-    "test_runs": 50,
-    "screenshots": 150,
-    "videos": 50
+  "0": {
+    "json": {
+      "where": {
+        "id": "<test-id>"
+      }
+    }
   }
 }
 ```
 
-## Error Responses
-
-<ResponseField name="404 Not Found" type="object">
-  Test not found
-  ```json
-  {
-    "error": "not_found",
-    "message": "Test not found"
+```bash Request Example
+curl -X POST 'https://app.tryiris.dev/api/trpc/test.delete' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <your-iris-token>' \
+  -d @- << EOF
+{
+  "0": {
+    "json": {
+      "where": {
+        "id": "<test-id>"
+      }
+    }
   }
-  ```
+}
+EOF
+```
+
+</CodeGroup>
+
+<ResponseExample>
+```json Response
+[
+  {
+    "result": {
+      "data": {
+        "json": {
+          "id": "4e3f1eeb-9779-450d-83c0-49b75b4d1c63",
+          "name": "First Test",
+          "description": "Test the login flow",
+          "url": "https://medx1.ai",
+          "naturalLanguageInput": "Goto https://medx1.ai\nLook for getting started button\nClick on the button\nSubmit the results",
+          "status": "DRAFT",
+          "isActive": true,
+          "projectId": "fa2d07f4-b608-411f-9455-ad5080dbbaed",
+          "createdById": "21a857f1-ba5f-4435-bcf6-f910ec07c0dc",
+          "createdAt": "2024-12-20T08:47:38.895Z",
+          "updatedAt": "2024-12-20T08:47:38.895Z"
+        }
+      }
+    }
+  }
+]
+```
+</ResponseExample>
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier of the deleted test
 </ResponseField>
 
-<ResponseField name="401 Unauthorized" type="object">
-  Missing or invalid API key
-  ```json
-  {
-    "error": "unauthorized",
-    "message": "Invalid API key provided"
-  }
-  ```
+<ResponseField name="name" type="string">
+  Name of the test
 </ResponseField>
 
-<ResponseField name="409 Conflict" type="object">
-  Test has active runs and force is false
-  ```json
-  {
-    "error": "conflict",
-    "message": "Test has active runs. Use force=true to delete anyway"
-  }
-  ```
-</ResponseField> 
+<ResponseField name="description" type="string">
+  Description of the test
+</ResponseField>
+
+<ResponseField name="url" type="string">
+  URL where the test was configured to run
+</ResponseField>
+
+<ResponseField name="naturalLanguageInput" type="string">
+  The test steps in natural language format
+</ResponseField>
+
+<ResponseField name="status" type="string">
+  Status of the test (e.g., "DRAFT")
+</ResponseField>
+
+<ResponseField name="isActive" type="boolean">
+  Whether the test was active
+</ResponseField>
+
+<ResponseField name="projectId" type="string">
+  ID of the project the test belonged to
+</ResponseField>
+
+<ResponseField name="createdById" type="string">
+  ID of the user who created the test
+</ResponseField>
+
+<ResponseField name="createdAt" type="date">
+  Timestamp when the test was created
+</ResponseField>
+
+<ResponseField name="updatedAt" type="date">
+  Timestamp when the test was last updated
+</ResponseField>

@@ -1,145 +1,121 @@
 ---
 title: 'Create Project'
-api: 'POST /api/v1/projects'
-description: 'Create a new test project'
+description: 'Create a new project in your organization'
+api: 'POST https://app.tryiris.dev/api/trpc/project.create'
+authentication: true
 ---
 
-## Request Body
+## Create Project
+
+Create a new project within your organization for organizing your automated tests.
+
+### Headers
+
+<ParamField header="IRIS_ACCESS_TOKEN" type="string" required>
+  Your Iris API access token
+</ParamField>
+
+### Body
 
 <ParamField body="name" type="string" required>
-  The name of the project. Must be unique within your organization.
+  Name of the project
 </ParamField>
 
-<ParamField body="description" type="string">
-  A detailed description of the project and its testing objectives.
+<ParamField body="description" type="string" required>
+  Description of the project
 </ParamField>
 
-<ParamField body="settings" type="object">
-  <Expandable title="properties">
-    <ParamField body="base_url" type="string" required>
-      The base URL of the application to be tested
-    </ParamField>
-    <ParamField body="default_timeout" type="integer">
-      Default timeout in seconds for test executions. Default: 30
-    </ParamField>
-    <ParamField body="environment" type="string">
-      Target environment (e.g., 'development', 'staging', 'production')
-    </ParamField>
-    <ParamField body="viewport" type="object">
-      Browser viewport settings
-      <Expandable title="properties">
-        <ParamField body="width" type="integer">
-          Viewport width in pixels. Default: 1920
-        </ParamField>
-        <ParamField body="height" type="integer">
-          Viewport height in pixels. Default: 1080
-        </ParamField>
-      </Expandable>
-    </ParamField>
-  </Expandable>
+<ParamField body="organizationId" type="string" required>
+  ID of your organization
 </ParamField>
 
-<ParamField body="tags" type="array">
-  List of tags for organizing projects
-</ParamField>
+### Response
 
-## Response
+Returns the created project details upon success.
 
-<ResponseField name="id" type="string">
-  The unique identifier of the created project
-</ResponseField>
+<CodeGroup>
 
-<ResponseField name="name" type="string">
-  The name of the project
-</ResponseField>
-
-<ResponseField name="description" type="string">
-  The project description
-</ResponseField>
-
-<ResponseField name="created_at" type="string">
-  ISO 8601 timestamp of when the project was created
-</ResponseField>
-
-<ResponseField name="settings" type="object">
-  Project configuration settings
-</ResponseField>
-
-<ResponseField name="tags" type="array">
-  List of project tags
-</ResponseField>
-
-## Example Request
-
-```bash
-curl -X POST https://api.tryiris.dev/api/v1/projects \
-  -H "Authorization: Bearer ${API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "e-commerce-testing",
-    "description": "End-to-end testing for our e-commerce platform",
-    "settings": {
-      "base_url": "https://shop.example.com",
-      "default_timeout": 45,
-      "environment": "staging",
-      "viewport": {
-        "width": 1920,
-        "height": 1080
-      }
-    },
-    "tags": ["e-commerce", "web", "staging"]
-  }'
-```
-
-## Example Response
-
-```json
+```json Request Body
 {
-  "id": "prj_9a8b7c6d5e",
-  "name": "e-commerce-testing",
-  "description": "End-to-end testing for our e-commerce platform",
-  "created_at": "2024-01-20T11:00:00Z",
-  "settings": {
-    "base_url": "https://shop.example.com",
-    "default_timeout": 45,
-    "environment": "staging",
-    "viewport": {
-      "width": 1920,
-      "height": 1080
+  "0": {
+    "json": {
+      "data": {
+        "name": "pokemon",
+        "description": "This will contain tests for making sure all pokemons are healthy",
+        "organizationId": "6ae3ce30-c530-4a80-b9eb-d7acfcf7ee73"
+      }
     }
-  },
-  "tags": ["e-commerce", "web", "staging"]
+  }
 }
 ```
 
-## Error Responses
-
-<ResponseField name="400 Bad Request" type="object">
-  Invalid request body or parameters
-  ```json
-  {
-    "error": "invalid_request",
-    "message": "Project name is required"
+```bash Request Example
+curl -X POST 'https://app.tryiris.dev/api/trpc/project.create' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <your-iris-token>' \
+  -d @- << EOF
+{
+  "0": {
+    "json": {
+      "data": {
+        "name": "pokemon",
+        "description": "This will contain tests for making sure all pokemons are healthy",
+        "organizationId": "6ae3ce30-c530-4a80-b9eb-d7acfcf7ee73"
+      }
+    }
   }
-  ```
+}
+EOF
+```
+
+</CodeGroup>
+
+<ResponseExample>
+```json Response
+[
+  {
+    "result": {
+      "data": {
+        "json": {
+          "id": "e52a06ec-6a16-4ae1-9a06-75cab17423c5",
+          "name": "pokemon",
+          "description": "This will contain tests for making sure all pokemons are healthy",
+          "organizationId": "6ae3ce30-c530-4a80-b9eb-d7acfcf7ee73",
+          "createdAt": "2025-01-01T07:55:48.106Z",
+          "updatedAt": "2025-01-01T07:55:48.106Z",
+          "cookies": null,
+          "session": null,
+          "localStorage": null
+        }
+      }
+    }
+  }
+]
+```
+</ResponseExample>
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the created project
 </ResponseField>
 
-<ResponseField name="401 Unauthorized" type="object">
-  Missing or invalid API key
-  ```json
-  {
-    "error": "unauthorized",
-    "message": "Invalid API key provided"
-  }
-  ```
+<ResponseField name="name" type="string">
+  Name of the project
 </ResponseField>
 
-<ResponseField name="409 Conflict" type="object">
-  Project name already exists
-  ```json
-  {
-    "error": "conflict",
-    "message": "Project name already exists"
-  }
-  ```
-</ResponseField> 
+<ResponseField name="description" type="string">
+  Description of the project
+</ResponseField>
+
+<ResponseField name="organizationId" type="string">
+  The organization ID associated with the project
+</ResponseField>
+
+<ResponseField name="createdAt" type="date">
+  Timestamp of when the project was created
+</ResponseField>
+
+<ResponseField name="updatedAt" type="date">
+  Timestamp of when the project was last updated
+</ResponseField>

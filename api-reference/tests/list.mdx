@@ -1,0 +1,247 @@
+---
+title: 'List Tests'
+description: 'Retrieve multiple tests for a project with optional batched project details'
+api: 'GET https://app.tryiris.dev/api/trpc/test.findMany'
+authentication: true
+---
+
+## List Tests
+
+Fetch a list of tests associated with a project, optionally including their latest test runs and project details.
+
+### Headers
+
+<ParamField header="IRIS_ACCESS_TOKEN" type="string" required>
+  Your Iris API access token
+</ParamField>
+
+### Query Parameters
+
+<ParamField query="projectId" type="string" required>
+  The unique identifier of the project
+</ParamField>
+
+<ParamField query="name" type="object" optional>
+  Filter tests by name
+  
+  <Expandable title="Properties">
+    <ParamField query="contains" type="string">
+      Text to search within test names
+    </ParamField>
+    
+    <ParamField query="mode" type="string">
+      Search mode (e.g., "insensitive" for case-insensitive search)
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField query="include" type="object" optional>
+  Specify related data to include
+  
+  <Expandable title="Properties">
+    <ParamField query="testRuns" type="object">
+      Include latest test runs
+      
+      <Expandable title="Properties">
+        <ParamField query="orderBy" type="object">
+          Sorting options for test runs
+        </ParamField>
+        
+        <ParamField query="take" type="number">
+          Number of test runs to include
+        </ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+### Batching Requests
+
+You can batch multiple related requests together for better performance. To batch requests, use the following format:
+
+<CodeGroup>
+```json Batched Request
+{
+  "0": {
+    "json": {
+      "where": {
+        "id": "<project-id>"
+      }
+    }
+  },
+  "1": {
+    "json": {
+      "where": {
+        "projectId": "<project-id>",
+        "name": {
+          "contains": "",
+          "mode": "insensitive"
+        }
+      },
+      "include": {
+        "testRuns": {
+          "orderBy": {
+            "createdAt": "desc"
+          },
+          "take": 1
+        }
+      }
+    }
+  }
+}
+```
+
+```bash Batched Request Example
+curl 'https://app.tryiris.dev/api/trpc/project.findFirst,test.findMany?batch=1' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <your-iris-token>' \
+  -d @- << EOF
+{
+  "0": {
+    "json": {
+      "where": {
+        "id": "d0a010ca-aa50-457b-9957-0d133d34886a"
+      }
+    }
+  },
+  "1": {
+    "json": {
+      "where": {
+        "projectId": "d0a010ca-aa50-457b-9957-0d133d34886a",
+        "name": {
+          "contains": "",
+          "mode": "insensitive"
+        }
+      },
+      "include": {
+        "testRuns": {
+          "orderBy": {
+            "createdAt": "desc"
+          },
+          "take": 1
+        }
+      }
+    }
+  }
+}
+EOF
+```
+
+</CodeGroup>
+
+### Response
+
+<ResponseField name="result" type="array">
+  Array containing test objects with the following structure:
+
+<Expandable title="Properties">
+  <ResponseField name="id" type="string">
+    Unique identifier for the test
+  </ResponseField>
+
+  <ResponseField name="name" type="string">
+    Name of the test
+  </ResponseField>
+
+  <ResponseField name="description" type="string">
+    Description of what the test does
+  </ResponseField>
+
+  <ResponseField name="url" type="string">
+    Target URL for the test
+  </ResponseField>
+
+  <ResponseField name="naturalLanguageInput" type="string">
+    Test steps in natural language
+  </ResponseField>
+
+  <ResponseField name="status" type="string">
+    Current status of the test (e.g., "DRAFT")
+  </ResponseField>
+
+  <ResponseField name="isActive" type="boolean">
+    Whether the test is active
+  </ResponseField>
+
+  <ResponseField name="projectId" type="string">
+    ID of the associated project
+  </ResponseField>
+
+  <ResponseField name="testRuns" type="array">
+    Latest test runs if included in the query
+    
+    <Expandable title="Test Run Properties">
+      <ResponseField name="id" type="string">
+        Unique identifier for the test run
+      </ResponseField>
+
+      <ResponseField name="status" type="string">
+        Status of the test run
+      </ResponseField>
+
+      <ResponseField name="errorLog" type="string">
+        Error logs if any
+      </ResponseField>
+
+      <ResponseField name="reportUrl" type="string">
+        URL to the test run report
+      </ResponseField>
+    </Expandable>
+  </ResponseField>
+</Expandable>
+</ResponseField>
+
+<ResponseExample>
+```json Response
+[
+  {
+    "result": {
+      "data": {
+        "json": [
+          {
+            "id": "c5147ecb-22d0-4704-9a30-932ebf28302f",
+            "name": "Login Flow",
+            "description": "This will test the login flow",
+            "url": "https://example.com",
+            "naturalLanguageInput": "Goto https://example.com\nClick on login...",
+            "status": "DRAFT",
+            "isActive": true,
+            "projectId": "d0a010ca-aa50-457b-9957-0d133d34886a",
+            "testRuns": [
+              {
+                "id": "c3a99503-b2e5-4958-8787-922a483d933f",
+                "status": "PENDING",
+                "errorLog": null,
+                "reportUrl": null
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+]
+```
+</ResponseExample>
+
+### Tips
+
+1. Use batching to combine related queries and reduce network requests
+2. The `batch=1` query parameter enables request batching
+3. You can combine `project.findFirst` and `test.findMany` in a single request
+4. Use the `include` parameter to fetch related test runs
+5. The `mode: "insensitive"` option in name search enables case-insensitive searching
+
+### Error Codes
+
+<ResponseField name="401" type="object">
+  Unauthorized - Invalid or missing API token
+</ResponseField>
+
+<ResponseField name="404" type="object">
+  Project not found
+</ResponseField>
+
+<ResponseField name="500" type="object">
+  Internal server error
+</ResponseField>
