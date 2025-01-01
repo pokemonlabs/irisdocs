@@ -1,6 +1,5 @@
-<svg width="160" height="40" viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg">
+<svg width="32" height="32" viewBox="0 0 80 40" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Gradient for infinity loops -->
     <linearGradient id="loopGradient" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#4CAF50;stop-opacity:1">
         <animate attributeName="stop-color" values="#4CAF50;#2E7D32;#4CAF50" dur="3s" repeatCount="indefinite"/>
@@ -10,7 +9,6 @@
       </stop>
     </linearGradient>
     
-    <!-- Glow effect -->
     <filter id="glow">
       <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
       <feMerge>
@@ -19,11 +17,9 @@
       </feMerge>
     </filter>
     
-    <!-- Motion path for particles -->
     <path id="motionPath" d="M10,20 C20,10 30,10 40,20 C50,30 60,30 70,20 C60,10 50,10 40,20 C30,30 20,30 10,20" fill="none"/>
   </defs>
 
-  <!-- Infinity Loop -->
   <g transform="translate(2, 2)" filter="url(#glow)">
     <path d="M10,20 C20,10 30,10 40,20 C50,30 60,30 70,20 C60,10 50,10 40,20 C30,30 20,30 10,20" 
           fill="none" 
@@ -35,7 +31,6 @@
                repeatCount="indefinite"/>
     </path>
     
-    <!-- Animated particles -->
     <circle r="2" fill="#81C784">
       <animateMotion dur="3s" repeatCount="indefinite">
         <mpath href="#motionPath"/>
@@ -54,9 +49,4 @@
       </animateMotion>
     </circle>
   </g>
-
-  <!-- Text "IRIS" -->
-  <text x="85" y="28" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#2E7D32" filter="url(#glow)">
-    <tspan style="letter-spacing: 1px;">IRIS</tspan>
-  </text>
 </svg>
