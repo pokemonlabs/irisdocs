@@ -1,97 +1,65 @@
 ---
-title: 'AI Agents'
-description: 'Understanding AI Agents in Iris QA'
+title: 'Agents'
+description: 'Understanding LLM Agents - The Core Component of Iris'
 ---
 
-## Overview
+# Agents
 
-AI Agents are the core of Iris QA's autonomous testing capabilities. These agents use advanced language models to understand, interact with, and test your user interfaces intelligently.
+Agents are the fundamental building blocks of Iris's testing capabilities. They are powered by Large Language Models (LLMs) and equipped with specialized tools that enable them to interact with web applications just like human users would.
 
-## Supported AI Models
+## What are Iris Agents?
 
-<CardGroup>
-  <Card title="Google Vertex AI" icon="google">
-    Leverage Google's advanced AI models for precise UI testing and natural language understanding.
-  </Card>
-  <Card title="Amazon Bedrock" icon="aws">
-    Access multiple foundation models through Amazon's Bedrock service for diverse testing capabilities.
-  </Card>
-  <Card title="Anthropic Claude" icon="brain">
-    Utilize Claude's advanced reasoning capabilities for complex testing scenarios.
-  </Card>
-</CardGroup>
+Iris agents are AI-powered entities that combine:
+- Advanced language understanding capabilities
+- Visual processing abilities
+- Web navigation tools
+- Testing automation capabilities
 
-## Agent Capabilities
+## Key Features
 
-### 1. UI Understanding
-- Natural language processing of UI elements
-- Context-aware interaction with components
-- Dynamic element identification
+### Multi-Modal Capabilities
+- **Visual Understanding**: Agents can process and understand website layouts, UI elements, and visual content
+- **Text Processing**: Comprehend textual content, error messages, and documentation
+- **Interactive Navigation**: Ability to click, type, scroll, and perform complex user interactions
 
-### 2. Test Generation
-- Automatic test case creation
-- Scenario identification
-- Edge case detection
+### Autonomous Operation
+- **Self-Guided Testing**: Agents can autonomously explore and test websites
+- **Intelligent Decision Making**: Make contextual decisions based on application state
+- **Error Detection**: Identify and report issues during testing
 
-### 3. Self-Healing
-- Adaptive element location
-- UI change detection
-- Automatic test maintenance
+### Tool Integration
+- **Built-in Tools**: Come equipped with various testing and navigation tools
+- **Customizable Actions**: Can be configured for specific testing scenarios
+- **Reporting Capabilities**: Generate detailed test reports and user journey graphs
 
 ## Creating an Agent
 
 To create an agent, you'll need to:
-
-1. Choose an AI model provider
-2. Configure authentication
-3. Set up agent parameters
-4. Define testing scope
-
-For detailed API information, see the [Agent API Reference](/api-reference/agents/create).
+1. Define the agent's purpose and scope
+2. Configure its permissions and capabilities
+3. Set up testing parameters
+4. Specify autonomous mode settings if required
 
 ## Best Practices
 
-<AccordionGroup>
-  <Accordion icon="wand-magic-sparkles" title="Model Selection">
-    Choose your AI model based on your specific testing needs:
-    - Vertex AI for complex UI understanding
-    - Bedrock for multi-model flexibility
-    - Claude for advanced reasoning tasks
-  </Accordion>
-  <Accordion icon="gear" title="Configuration">
-    Optimize your agent's performance by:
-    - Setting appropriate timeout values
-    - Configuring retry mechanisms
-    - Defining clear test boundaries
-  </Accordion>
-  <Accordion icon="shield" title="Security">
-    Ensure secure agent operation by:
-    - Using environment variables for credentials
-    - Implementing proper access controls
-    - Regular security audits
-  </Accordion>
-</AccordionGroup>
+- Start with clearly defined test objectives
+- Configure appropriate permission levels
+- Monitor agent activities during initial runs
+- Regularly update agent configurations based on testing needs
 
-## Example Configuration
+## Use Cases
 
-```json
-{
-  "agent": {
-    "name": "e2e-test-agent",
-    "model": {
-      "provider": "vertex-ai",
-      "version": "text-bison-32k"
-    },
-    "configuration": {
-      "temperature": 0.7,
-      "max_tokens": 1024,
-      "timeout_seconds": 300
-    },
-    "capabilities": [
-      "ui-interaction",
-      "test-generation",
-      "self-healing"
-    ]
-  }
-}
-``` 
+1. **Automated Testing**
+   - End-to-end testing
+   - User journey validation
+   - Regression testing
+
+2. **User Experience Analysis**
+   - Navigation flow assessment
+   - UI/UX evaluation
+   - Performance monitoring
+
+3. **Documentation Verification**
+   - Content accuracy checking
+   - Link validation
+   - Cross-reference verification 
