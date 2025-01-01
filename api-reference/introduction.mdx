@@ -1,95 +1,160 @@
 ---
-title: 'API Reference'
-description: 'Complete API reference for Iris QA'
+title: 'Introduction'
+description: 'Overview of Iris AI Testing API structure and usage'
 ---
 
 ## Introduction
 
-Welcome to the Iris QA API reference. Our API follows RESTful principles and uses JSON for request and response bodies. All API endpoints are served over HTTPS and are accessible at `https://api.tryiris.dev`.
+Welcome to the Iris AI Testing API documentation. Our API is built using [tRPC](https://trpc.io), providing end-to-end typesafe APIs with great developer experience.
+
+<Note>
+  A TypeScript SDK is coming soon to make integration even easier! Stay tuned for updates.
+</Note>
+
+## API Structure
+
+All our API endpoints follow a consistent tRPC-based structure:
+
+```bash
+https://app.tryiris.dev/api/trpc/[router].[procedure]
+```
+
+For example:
+- `test.create` - Create a new test
+- `agent.delete` - Delete an AI agent
+- `project.update` - Update project details
 
 ## Authentication
 
-All API requests require authentication using an API key. You can obtain your API key from the [Iris QA Dashboard](https://app.tryiris.dev/settings/api-keys).
+All API requests require authentication using your Iris API token. Include it as a header in your requests:
 
-Include your API key in the `Authorization` header of all requests:
-
-```bash
-Authorization: Bearer your_api_key_here
+<CodeGroup>
+```bash Headers
+IRIS_ACCESS_TOKEN: <your-iris-token>
 ```
+</CodeGroup>
 
-## Base URL
+<Note>
+  You can obtain your API token from the Iris dashboard under Settings > API Keys.
+</Note>
 
-```bash
-https://api.tryiris.dev
-```
+## Request/Response Format
 
-## API Versioning
+Due to the tRPC architecture, all requests follow a consistent format:
 
-The current version of the API is `v1`. Include the version in the URL path:
-
-```bash
-https://api.tryiris.dev/api/v1/
-```
-
-## Rate Limiting
-
-The API implements rate limiting based on your subscription tier:
-- Free tier: 100 requests per minute
-- Pro tier: 1000 requests per minute
-- Enterprise tier: Custom limits
-
-Rate limit information is included in the response headers:
-- `X-RateLimit-Limit`: Total requests allowed per window
-- `X-RateLimit-Remaining`: Remaining requests in current window
-- `X-RateLimit-Reset`: Time when the rate limit resets (Unix timestamp)
-
-## Response Format
-
-All responses are returned in JSON format. Successful responses have a 2xx status code and contain the requested data. Error responses have a 4xx or 5xx status code and include error details.
-
-### Success Response Format
-
-```json
+<CodeGroup>
+```json Request Structure
 {
-  "data": {
-    // Response data
-  },
-  "meta": {
-    // Metadata like pagination info
-  }
-}
-```
-
-### Error Response Format
-
-```json
-{
-  "error": {
-    "code": "error_code",
-    "message": "Human readable error message",
-    "details": {
-      // Additional error details
+  "0": {
+    "json": {
+      // Request specific parameters
+      "data": {},
+      "where": {},
+      "include": {}
     }
   }
 }
 ```
 
-## Pagination
+```json Response Structure
+[
+  {
+    "result": {
+      "data": {
+        "json": {
+          // Response data
+        }
+      }
+    }
+  }
+]
+```
+</CodeGroup>
 
-List endpoints support pagination using the following query parameters:
-- `page`: Page number (default: 1)
-- `per_page`: Items per page (default: 20, max: 100)
+## Common Patterns
 
-Pagination metadata is included in the response:
+### Batching Requests
+
+tRPC allows batching multiple requests together for better performance:
+
+```bash
+https://app.tryiris.dev/api/trpc/[procedure1],[procedure2]?batch=1
+```
+
+### Including Related Data
+
+Many endpoints support an `include` parameter to fetch related data:
 
 ```json
 {
-  "data": [...],
-  "meta": {
-    "current_page": 1,
-    "per_page": 20,
-    "total_pages": 5,
-    "total_items": 100
+  "include": {
+    "testRuns": {
+      "orderBy": {
+        "createdAt": "desc"
+      },
+      "take": 1
+    }
   }
 }
 ```
+
+### Filtering and Searching
+
+Use `where` clauses for filtering:
+
+```json
+{
+  "where": {
+    "name": {
+      "contains": "search-term",
+      "mode": "insensitive"
+    }
+  }
+}
+```
+
+## Error Handling
+
+<ResponseField name="401" type="object">
+  Unauthorized - Invalid or missing API token
+</ResponseField>
+
+<ResponseField name="404" type="object">
+  Resource not found
+</ResponseField>
+
+<ResponseField name="500" type="object">
+  Internal server error
+</ResponseField>
+
+## Type Safety
+
+<Tip>
+Our API is built with tRPC, ensuring complete type safety from your API calls to your database. When our TypeScript SDK is released, you'll get:
+
+- Full autocompletion
+- Runtime type checking
+- Compile-time type checking
+- Automatic type inference
+</Tip>
+
+## Available Endpoints
+
+Our API is organized into several main categories:
+
+<CardGroup cols={2}>
+  <Card title="Tests" icon="vial" href="/api-reference/tests/create">
+    Create and manage automated tests. Includes endpoints for [creating](/api-reference/tests/create), [listing](/api-reference/tests/list), [updating](/api-reference/tests/update), and [deleting](/api-reference/tests/delete) tests.
+  </Card>
+  <Card title="Agents" icon="robot" href="/api-reference/agents/create">
+    Configure AI testing agents. Access endpoints for [creating](/api-reference/agents/create), [getting](/api-reference/agents/get), and [deleting](/api-reference/agents/delete) agents.
+  </Card>
+  <Card title="Projects" icon="folder" href="/api-reference/projects/create">
+    Organize tests into projects. Use endpoints to [create](/api-reference/projects/create) and [delete](/api-reference/projects/delete) projects.
+  </Card>
+  <Card title="Organizations" icon="building" href="/api-reference/organizations/create">
+    Manage team access and settings. Includes organization management endpoints.
+  </Card>
+</CardGroup>
+
+Even if an endpoint isn't explicitly documented, it likely exists and follows the same patterns described above. This is because our tRPC backend automatically exposes procedures in a consistent way.
