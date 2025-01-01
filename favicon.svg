@@ -10,7 +10,7 @@
     </linearGradient>
     
     <filter id="glow">
-      <feGaussianBlur stdDeviation="1" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
       <feMerge>
         <feMergeNode in="coloredBlur"/>
         <feMergeNode in="SourceGraphic"/>
@@ -24,26 +24,26 @@
     <path d="M10,20 C20,10 30,10 40,20 C50,30 60,30 70,20 C60,10 50,10 40,20 C30,30 20,30 10,20" 
           fill="none" 
           stroke="url(#loopGradient)" 
-          stroke-width="4">
+          stroke-width="6">
       <animate attributeName="stroke-dasharray" 
                values="0,1000;200,0" 
                dur="3s" 
                repeatCount="indefinite"/>
     </path>
     
-    <circle r="2" fill="#81C784">
+    <circle r="3.5" fill="#81C784">
       <animateMotion dur="3s" repeatCount="indefinite">
         <mpath href="#motionPath"/>
       </animateMotion>
     </circle>
     
-    <circle r="2" fill="#4CAF50">
+    <circle r="3.5" fill="#4CAF50">
       <animateMotion dur="3s" repeatCount="indefinite" begin="1s">
         <mpath href="#motionPath"/>
       </animateMotion>
     </circle>
     
-    <circle r="2" fill="#2E7D32">
+    <circle r="3.5" fill="#2E7D32">
       <animateMotion dur="3s" repeatCount="indefinite" begin="2s">
         <mpath href="#motionPath"/>
       </animateMotion>
