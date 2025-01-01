@@ -5,75 +5,12 @@ description: 'Understanding the elegant and intelligent system designed for auto
 
 The Iris architecture is an elegant and intelligent system designed for autonomous web testing.
 
-```mermaid
-graph TB
-    subgraph "Control Plane"
-        FE[Frontend - Next.js/TypeScript]
-        API[tRPC API Layer]
-        DB[(Database - Prisma/ZenStack)]
-        MB[Message Broker]
-        
-        subgraph "AI Orchestrator"
-            AIC[AI Controller]
-            MLM[ML Models Manager]
-            TG[Test Generator]
-        end
-    end
+<Frame>
+  <img src="/images/arch.png" alt="Iris Architecture Diagram" />
+</Frame>
 
-    subgraph "AI Agent Network"
-        A1[Agent 1]
-        A2[Agent 2]
-        A3[Agent 3]
-        
-        subgraph "Agent Capabilities"
-            VP[Vision Processing]
-            NLP[Natural Language Processing]
-            TE[Test Execution]
-            RL[Recursive Learning]
-        end
-    end
 
-    subgraph "External Systems"
-        AUTH[OAuth Providers]
-        WEB[Web Applications]
-        STORAGE[Cloud Storage]
-    end
-
-    %% Control Plane Connections
-    FE <--> API
-    API <--> DB
-    API <--> MB
-    API <--> AIC
-    AIC <--> MLM
-    AIC <--> TG
-    
-    %% AI Agent Connections
-    MB <--> A1
-    MB <--> A2
-    MB <--> A3
-    
-    A1 --> VP
-    A1 --> NLP
-    A1 --> TE
-    A1 --> RL
-    
-    %% External Connections
-    FE <--> AUTH
-    A1 <--> WEB
-    A2 <--> WEB
-    A3 <--> WEB
-    MLM <--> STORAGE
-
-    classDef primary fill:#2563eb,stroke:#1d4ed8,color:white
-    classDef secondary fill:#4b5563,stroke:#374151,color:white
-    classDef external fill:#059669,stroke:#047857,color:white
-
-    class FE,API,DB,MB,AIC,MLM,TG primary
-    class A1,A2,A3,VP,NLP,TE,RL secondary
-    class AUTH,WEB,STORAGE external
-```
-
-The code is available at [github.com/tryiris/iris](https://github.com/codebanesr/irisland).
+The code is available at [github.com/tryiris/iris](https://github.com/orgs/pokemonlabs/repositories).
 
 ## Architecture Components
 
