@@ -1,136 +1,147 @@
 ---
 title: 'Create Agent'
-api: 'POST /api/v1/agents'
-description: 'Create a new AI agent for UI testing'
+description: 'Create a new AI agent for automated testing'
+api: 'POST https://app.tryiris.dev/api/trpc/agent.create'
+authentication: true
 ---
 
-## Request Body
+## Create Agent
 
-<ParamField body="name" type="string" required>
-  The name of the agent. Must be unique within your organization.
+Create a new AI agent with specified provider and model type.
+
+### Headers
+
+<ParamField header="IRIS_ACCESS_TOKEN" type="string" required>
+  Your Iris API access token
 </ParamField>
 
-<ParamField body="model" type="object" required>
-  <Expandable title="properties">
-    <ParamField body="provider" type="string" required>
-      The AI model provider. One of: `vertex-ai`, `bedrock`, `anthropic`
-    </ParamField>
-    <ParamField body="version" type="string" required>
-      The specific model version to use (e.g., `text-bison-32k`, `claude-2`)
-    </ParamField>
-  </Expandable>
+### Body
+
+<ParamField body="provider" type="string" required>
+  The AI provider to use
 </ParamField>
 
-<ParamField body="configuration" type="object" required>
-  <Expandable title="properties">
-    <ParamField body="temperature" type="number">
-      Model temperature (0.0 to 1.0). Default: 0.7
-    </ParamField>
-    <ParamField body="max_tokens" type="integer">
-      Maximum tokens per response. Default: 1024
-    </ParamField>
-    <ParamField body="timeout_seconds" type="integer">
-      Request timeout in seconds. Default: 300
-    </ParamField>
-  </Expandable>
+<ParamField body="modelType" type="string" required>
+  Type of model to create
 </ParamField>
 
-<ParamField body="capabilities" type="array">
-  List of enabled capabilities. Available options: `ui-interaction`, `test-generation`, `self-healing`
+<ParamField body="organizationId" type="string" required>
+  Your organization ID
 </ParamField>
 
-## Response
+<ParamField body="anthropicApiKey" type="string" required>
+  Your Anthropic API key
+</ParamField>
 
-<ResponseField name="id" type="string">
-  The unique identifier of the created agent
-</ResponseField>
+### Response
 
-<ResponseField name="created_at" type="string">
-  ISO 8601 timestamp of when the agent was created
-</ResponseField>
+Returns the created agent details upon success.
 
-<ResponseField name="status" type="string">
-  Current status of the agent: `initializing`, `ready`, `error`
-</ResponseField>
+<CodeGroup>
 
-## Example Request
-
-```bash
-curl -X POST https://api.tryiris.dev/api/v1/agents \
-  -H "Authorization: Bearer ${API_KEY}" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "e2e-test-agent",
-    "model": {
-      "provider": "vertex-ai",
-      "version": "text-bison-32k"
-    },
-    "configuration": {
-      "temperature": 0.7,
-      "max_tokens": 1024,
-      "timeout_seconds": 300
-    },
-    "capabilities": [
-      "ui-interaction",
-      "test-generation",
-      "self-healing"
-    ]
-  }'
-```
-
-## Example Response
-
-```json
+```json Request Body
 {
-  "id": "agt_7f8d9e2a1b3c",
-  "name": "e2e-test-agent",
-  "created_at": "2024-01-20T08:30:00Z",
-  "status": "initializing",
-  "model": {
-    "provider": "vertex-ai",
-    "version": "text-bison-32k"
-  },
-  "configuration": {
-    "temperature": 0.7,
-    "max_tokens": 1024,
-    "timeout_seconds": 300
-  },
-  "capabilities": [
-    "ui-interaction",
-    "test-generation",
-    "self-healing"
-  ]
+  "0": {
+    "json": {
+      "data": {
+        "provider": "<provider>",
+        "modelType": "<model-type>",
+        "organizationId": "<your-organization-id>",
+        "anthropicApiKey": "<your-anthropic-api-key>"
+      }
+    }
+  }
 }
 ```
 
-## Error Responses
-
-<ResponseField name="400 Bad Request" type="object">
-  Invalid request body or parameters
-  ```json
-  {
-    "error": "invalid_request",
-    "message": "Invalid model provider specified"
+```bash Request Example
+curl -X POST 'https://app.tryiris.dev/api/trpc/agent.create' \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer <your-iris-token>' \
+  -d @- << EOF
+{
+  "0": {
+    "json": {
+      "data": {
+        "provider": "<provider>",
+        "modelType": "<model-type>",
+        "organizationId": "<your-organization-id>",
+        "anthropicApiKey": "<your-anthropic-api-key>"
+      }
+    }
   }
-  ```
+}
+EOF
+```
+
+</CodeGroup>
+
+<ResponseExample>
+```json Response
+[
+  {
+    "result": {
+      "data": {
+        "json": {
+          "id": "174a0ac6-9d0d-43ad-a2c0-d11e52b36c91",
+          "provider": "anthropic",
+          "modelType": "claude-3-5-sonnet-20241022",
+          "numAgents": 0,
+          "isActive": true,
+          "anthropicApiKey": null,
+          "awsAccessKeyId": null,
+          "awsSecretAccessKey": null,
+          "awsSessionToken": null,
+          "awsRegion": null,
+          "apiEndpoint": null,
+          "apiKey": null,
+          "organizationId": "6ae3ce30-c530-4a80-b9eb-d7acfcf7ee73",
+          "createdAt": "2025-01-01T07:06:07.758Z",
+          "updatedAt": "2025-01-01T07:06:07.758Z"
+        },
+        "meta": {
+          "values": {
+            "createdAt": ["Date"],
+            "updatedAt": ["Date"]
+          }
+        }
+      }
+    }
+  }
+]
+```
+</ResponseExample>
+
+### Response Fields
+
+<ResponseField name="id" type="string">
+  Unique identifier for the created agent
 </ResponseField>
 
-<ResponseField name="401 Unauthorized" type="object">
-  Missing or invalid API key
-  ```json
-  {
-    "error": "unauthorized",
-    "message": "Invalid API key provided"
-  }
-  ```
+<ResponseField name="provider" type="string">
+  The AI provider being used
 </ResponseField>
 
-<ResponseField name="429 Too Many Requests" type="object">
-  Rate limit exceeded
-  ```json
-  {
-    "error": "rate_limit_exceeded",
-    "message": "Too many requests. Please try again later"
-  }
-  ```
-</ResponseField> 
+<ResponseField name="modelType" type="string">
+  The type of model created
+</ResponseField>
+
+<ResponseField name="numAgents" type="number">
+  Number of agents (defaults to 0)
+</ResponseField>
+
+<ResponseField name="isActive" type="boolean">
+  Whether the agent is active
+</ResponseField>
+
+<ResponseField name="organizationId" type="string">
+  The organization ID associated with the agent
+</ResponseField>
+
+<ResponseField name="createdAt" type="date">
+  Timestamp of when the agent was created
+</ResponseField>
+
+<ResponseField name="updatedAt" type="date">
+  Timestamp of when the agent was last updated
+</ResponseField>
