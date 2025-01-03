@@ -59,7 +59,8 @@
         "core-concepts/agents",
         "core-concepts/projects",
         "core-concepts/tests",
-        "core-concepts/test-runs"
+        "core-concepts/test-runs",
+        "core-concepts/integrations"
       ]
     },
     {
