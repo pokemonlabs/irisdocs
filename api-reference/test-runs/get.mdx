@@ -1,6 +1,6 @@
 ---
 title: 'Get Test Run'
-api: 'GET /api/v1/test-runs/{test_run_id}'
+api: 'GET /api/trpc/testRuns.get?batch=1&input={"0":{"json":{"testRunId":"test_run_id"}}}'
 description: 'Retrieve details of a specific test run'
 ---
 
@@ -90,7 +90,7 @@ description: 'Retrieve details of a specific test run'
 ## Example Request
 
 ```bash
-curl https://api.tryiris.dev/api/v1/test-runs/run_2f3e4d5c6b \
+curl "https://api.tryiris.dev/api/trpc/testRuns.get?batch=1&input=%7B%220%22%3A%7B%22json%22%3A%7B%22testRunId%22%3A%22run_2f3e4d5c6b%22%7D%7D%7D" \
   -H "Authorization: Bearer ${API_KEY}"
 ```
 

@@ -1,6 +1,6 @@
 ---
 title: 'Update Project'
-api: 'PUT /api/v1/projects/{project_id}'
+api: 'PUT /api/trpc/projects.update'
 description: 'Update an existing project configuration'
 ---
 
@@ -12,41 +12,45 @@ description: 'Update an existing project configuration'
 
 ## Request Body
 
-<ParamField body="name" type="string">
-  The new name for the project
-</ParamField>
-
-<ParamField body="description" type="string">
-  Updated project description
-</ParamField>
-
-<ParamField body="settings" type="object">
+<ParamField body="0.json.data" type="object">
   <Expandable title="properties">
-    <ParamField body="base_url" type="string">
-      The base URL of the application to be tested
+    <ParamField body="project_id" type="string" required>
+      The unique identifier of the project to update
     </ParamField>
-    <ParamField body="default_timeout" type="integer">
-      Default timeout in seconds for test executions
+    <ParamField body="name" type="string">
+      The new name for the project
     </ParamField>
-    <ParamField body="environment" type="string">
-      Target environment (e.g., 'development', 'staging', 'production')
+    <ParamField body="description" type="string">
+      Updated project description
     </ParamField>
-    <ParamField body="viewport" type="object">
-      Browser viewport settings
+    <ParamField body="settings" type="object">
       <Expandable title="properties">
-        <ParamField body="width" type="integer">
-          Viewport width in pixels
+        <ParamField body="base_url" type="string">
+          The base URL of the application to be tested
         </ParamField>
-        <ParamField body="height" type="integer">
-          Viewport height in pixels
+        <ParamField body="default_timeout" type="integer">
+          Default timeout in seconds for test executions
+        </ParamField>
+        <ParamField body="environment" type="string">
+          Target environment (e.g., 'development', 'staging', 'production')
+        </ParamField>
+        <ParamField body="viewport" type="object">
+          Browser viewport settings
+          <Expandable title="properties">
+            <ParamField body="width" type="integer">
+              Viewport width in pixels
+            </ParamField>
+            <ParamField body="height" type="integer">
+              Viewport height in pixels
+            </ParamField>
+          </Expandable>
         </ParamField>
       </Expandable>
     </ParamField>
+    <ParamField body="tags" type="array">
+      Updated list of project tags
+    </ParamField>
   </Expandable>
-</ParamField>
-
-<ParamField body="tags" type="array">
-  Updated list of project tags
 </ParamField>
 
 ## Response
@@ -78,22 +82,29 @@ description: 'Update an existing project configuration'
 ## Example Request
 
 ```bash
-curl -X PUT https://api.tryiris.dev/api/v1/projects/prj_9a8b7c6d5e \
+curl -X PUT https://api.tryiris.dev/api/trpc/projects.update \
   -H "Authorization: Bearer ${API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{
-    "name": "e-commerce-testing-v2",
-    "description": "Updated end-to-end testing suite for our e-commerce platform",
-    "settings": {
-      "base_url": "https://shop.example.com",
-      "default_timeout": 60,
-      "environment": "production",
-      "viewport": {
-        "width": 1440,
-        "height": 900
+    "0": {
+      "json": {
+        "data": {
+          "project_id": "prj_9a8b7c6d5e",
+          "name": "e-commerce-testing-v2",
+          "description": "Updated end-to-end testing suite for our e-commerce platform",
+          "settings": {
+            "base_url": "https://shop.example.com",
+            "default_timeout": 60,
+            "environment": "production",
+            "viewport": {
+              "width": 1440,
+              "height": 900
+            }
+          },
+          "tags": ["e-commerce", "web", "production"]
+        }
       }
-    },
-    "tags": ["e-commerce", "web", "production"]
+    }
   }'
 ```
 

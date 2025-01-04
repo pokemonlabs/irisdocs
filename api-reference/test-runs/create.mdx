@@ -1,6 +1,6 @@
 ---
 title: 'Create Test Run'
-api: 'POST /api/v1/test-runs'
+api: 'POST /api/trpc/test-runs.create'
 description: 'Create and execute a new test run'
 ---
 
@@ -85,23 +85,29 @@ description: 'Create and execute a new test run'
 ## Example Request
 
 ```bash
-curl -X POST https://api.tryiris.dev/api/v1/test-runs \
+curl -X POST https://api.tryiris.dev/api/trpc/test-runs.create \
   -H "Authorization: Bearer ${API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{
-    "test_id": "tst_1a2b3c4d5e",
-    "agent_id": "agt_7f8d9e2a1b3c",
-    "environment": "staging",
-    "configuration": {
-      "timeout": 300,
-      "retry_count": 2,
-      "parallel_steps": true,
-      "screenshot_on_failure": true,
-      "video_recording": true
-    },
-    "variables": {
-      "USER_EMAIL": "test@example.com",
-      "PRODUCT_SKU": "DEMO-123"
+    "0": {
+      "json": {
+        "data": {
+          "test_id": "tst_1a2b3c4d5e",
+          "agent_id": "agt_7f8d9e2a1b3c",
+          "environment": "staging",
+          "configuration": {
+            "timeout": 300,
+            "retry_count": 2,
+            "parallel_steps": true,
+            "screenshot_on_failure": true,
+            "video_recording": true
+          },
+          "variables": {
+            "USER_EMAIL": "test@example.com",
+            "PRODUCT_SKU": "DEMO-123"
+          }
+        }
+      }
     }
   }'
 ```

@@ -1,6 +1,6 @@
 ---
 title: 'Delete Test Run'
-api: 'DELETE /api/v1/test-runs/{test_run_id}'
+api: 'DELETE /api/trpc/test-runs.delete'
 description: 'Delete a test run and its associated resources'
 ---
 
@@ -12,8 +12,19 @@ description: 'Delete a test run and its associated resources'
 
 ## Query Parameters
 
-<ParamField query="delete_artifacts" type="boolean">
-  If true, also delete associated artifacts (screenshots, videos). Default: false
+<ParamField query="batch" type="number" required>
+  Must be set to 1
+</ParamField>
+
+<ParamField query="input" type="object" required>
+  <Expandable title="properties">
+    <ParamField query="test_run_id" type="string" required>
+      The unique identifier of the test run to delete
+    </ParamField>
+    <ParamField query="delete_artifacts" type="boolean">
+      If true, also delete associated artifacts (screenshots, videos). Default: false
+    </ParamField>
+  </Expandable>
 </ParamField>
 
 ## Response
@@ -43,7 +54,7 @@ description: 'Delete a test run and its associated resources'
 ## Example Request
 
 ```bash
-curl -X DELETE "https://api.tryiris.dev/api/v1/test-runs/run_2f3e4d5c6b?delete_artifacts=true" \
+curl -X DELETE "https://api.tryiris.dev/api/trpc/test-runs.delete?batch=1&input=%7B%22test_run_id%22%3A%22run_2f3e4d5c6b%22%2C%22delete_artifacts%22%3Atrue%7D" \
   -H "Authorization: Bearer ${API_KEY}"
 ```
 

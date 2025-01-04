@@ -1,6 +1,6 @@
 ---
 title: 'Update Test Run'
-api: 'PUT /api/v1/test-runs/{test_run_id}'
+api: 'PUT /api/trpc/test-runs.update'
 description: 'Update a test run configuration or status'
 ---
 
@@ -12,32 +12,42 @@ description: 'Update a test run configuration or status'
 
 ## Request Body
 
-<ParamField body="status" type="string">
-  Update the test run status. Only allowed values: `cancelled`, `paused`, `resumed`
-</ParamField>
-
-<ParamField body="configuration" type="object">
+<ParamField body="0" type="object" required>
   <Expandable title="properties">
-    <ParamField body="timeout" type="integer">
-      Update test execution timeout in seconds
-    </ParamField>
-    <ParamField body="retry_count" type="integer">
-      Update number of retry attempts for failed steps
-    </ParamField>
-    <ParamField body="parallel_steps" type="boolean">
-      Update parallel execution setting
-    </ParamField>
-    <ParamField body="screenshot_on_failure" type="boolean">
-      Update screenshot capture setting
-    </ParamField>
-    <ParamField body="video_recording" type="boolean">
-      Update video recording setting
+    <ParamField body="json" type="object" required>
+      <Expandable title="properties">
+        <ParamField body="data" type="object" required>
+          <Expandable title="properties">
+            <ParamField body="status" type="string">
+              Update the test run status. Only allowed values: `cancelled`, `paused`, `resumed`
+            </ParamField>
+            <ParamField body="configuration" type="object">
+              <Expandable title="properties">
+                <ParamField body="timeout" type="integer">
+                  Update test execution timeout in seconds
+                </ParamField>
+                <ParamField body="retry_count" type="integer">
+                  Update number of retry attempts for failed steps
+                </ParamField>
+                <ParamField body="parallel_steps" type="boolean">
+                  Update parallel execution setting
+                </ParamField>
+                <ParamField body="screenshot_on_failure" type="boolean">
+                  Update screenshot capture setting
+                </ParamField>
+                <ParamField body="video_recording" type="boolean">
+                  Update video recording setting
+                </ParamField>
+              </Expandable>
+            </ParamField>
+            <ParamField body="variables" type="object">
+              Update environment variables for this test run
+            </ParamField>
+          </Expandable>
+        </ParamField>
+      </Expandable>
     </ParamField>
   </Expandable>
-</ParamField>
-
-<ParamField body="variables" type="object">
-  Update environment variables for this test run
 </ParamField>
 
 ## Response
@@ -65,17 +75,23 @@ description: 'Update a test run configuration or status'
 ## Example Request
 
 ```bash
-curl -X PUT https://api.tryiris.dev/api/v1/test-runs/run_2f3e4d5c6b \
+curl -X PUT https://api.tryiris.dev/api/trpc/test-runs.update \
   -H "Authorization: Bearer ${API_KEY}" \
   -H "Content-Type: application/json" \
   -d '{
-    "status": "paused",
-    "configuration": {
-      "timeout": 600,
-      "retry_count": 3
-    },
-    "variables": {
-      "DEBUG_MODE": "true"
+    "0": {
+      "json": {
+        "data": {
+          "status": "paused",
+          "configuration": {
+            "timeout": 600,
+            "retry_count": 3
+          },
+          "variables": {
+            "DEBUG_MODE": "true"
+          }
+        }
+      }
     }
   }'
 ```

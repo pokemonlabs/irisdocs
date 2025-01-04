@@ -1,7 +1,7 @@
 ---
 title: 'Get Agents'
 description: 'Retrieve a list of AI agents for your organization'
-api: 'POST https://app.tryiris.dev/api/trpc/agent.findMany'
+api: 'GET https://app.tryiris.dev/api/trpc/agent.findMany?batch=1&input={"where":{"organizationId":"YOUR_ORG_ID"},"orderBy":{"createdAt":"desc"}}'
 authentication: true
 ---
 
@@ -15,21 +15,25 @@ Retrieve all AI agents associated with your organization, ordered by creation da
   Your Iris API access token
 </ParamField>
 
-### Body
+### Query Parameters
 
-<ParamField body="data" type="object" required>
+<ParamField query="batch" type="number" required>
+  Must be set to 1
+</ParamField>
+
+<ParamField query="input" type="object" required>
   <Expandable title="properties">
-    <ParamField body="where" type="object" required>
+    <ParamField query="where" type="object" required>
       <Expandable title="properties">
-        <ParamField body="organizationId" type="string" required>
+        <ParamField query="organizationId" type="string" required>
           Your organization ID
         </ParamField>
       </Expandable>
     </ParamField>
 
-    <ParamField body="orderBy" type="object">
+    <ParamField query="orderBy" type="object">
       <Expandable title="properties">
-        <ParamField body="createdAt" type="string">
+        <ParamField query="createdAt" type="string">
           Sort order for results (e.g. "desc" for descending)
         </ParamField>
       </Expandable>

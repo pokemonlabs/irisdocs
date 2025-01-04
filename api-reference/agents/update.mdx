@@ -1,7 +1,7 @@
 ---
 title: 'Update Agent'
 description: 'Update an existing AI agent'
-api: 'POST https://app.tryiris.dev/api/trpc/agent.update'
+api: 'POST https://app.tryiris.dev/api/trpc/agent.update?batch=1'
 authentication: true
 ---
 
@@ -17,46 +17,50 @@ Update an existing AI agent's configuration.
 
 ### Body
 
-<ParamField body="data" type="object" required>
+<ParamField body="0" type="object" required>
   <Expandable title="properties">
-    <ParamField body="where" type="object" required>
+    <ParamField body="json" type="object" required>
       <Expandable title="properties">
-        <ParamField body="id" type="string" required>
-          The unique identifier of the agent to update
-        </ParamField>
-      </Expandable>
-    </ParamField>
-
-    <ParamField body="data" type="object" required>
-      <Expandable title="properties">
-        <ParamField body="name" type="string">
-          The new name for the agent
-        </ParamField>
-
-        <ParamField body="provider" type="string">
-          The AI provider to use (e.g. "anthropic", "vertex-ai", "bedrock")
-        </ParamField>
-
-        <ParamField body="modelType" type="string">
-          Type of model to use
-        </ParamField>
-
-        <ParamField body="configuration" type="object">
+        <ParamField body="where" type="object" required>
           <Expandable title="properties">
-            <ParamField body="temperature" type="number">
-              Model temperature (0.0 to 1.0)
-            </ParamField>
-            <ParamField body="maxTokens" type="integer">
-              Maximum tokens per response
-            </ParamField>
-            <ParamField body="timeoutSeconds" type="integer">
-              Request timeout in seconds
+            <ParamField body="id" type="string" required>
+              The unique identifier of the agent to update
             </ParamField>
           </Expandable>
         </ParamField>
 
-        <ParamField body="capabilities" type="array">
-          List of enabled capabilities
+        <ParamField body="data" type="object" required>
+          <Expandable title="properties">
+            <ParamField body="name" type="string">
+              The new name for the agent
+            </ParamField>
+
+            <ParamField body="provider" type="string">
+              The AI provider to use (e.g. "anthropic", "vertex-ai", "bedrock")
+            </ParamField>
+
+            <ParamField body="modelType" type="string">
+              Type of model to use
+            </ParamField>
+
+            <ParamField body="configuration" type="object">
+              <Expandable title="properties">
+                <ParamField body="temperature" type="number">
+                  Model temperature (0.0 to 1.0)
+                </ParamField>
+                <ParamField body="maxTokens" type="integer">
+                  Maximum tokens per response
+                </ParamField>
+                <ParamField body="timeoutSeconds" type="integer">
+                  Request timeout in seconds
+                </ParamField>
+              </Expandable>
+            </ParamField>
+
+            <ParamField body="capabilities" type="array">
+              List of enabled capabilities
+            </ParamField>
+          </Expandable>
         </ParamField>
       </Expandable>
     </ParamField>

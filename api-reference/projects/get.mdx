@@ -1,13 +1,21 @@
 ---
 title: 'Get Project'
-api: 'GET /api/v1/projects/{project_id}'
+api: 'GET /api/trpc/projects.get'
 description: 'Retrieve details of a specific project'
 ---
 
-## Path Parameters
+## Query Parameters
 
-<ParamField path="project_id" type="string" required>
-  The unique identifier of the project to retrieve
+<ParamField query="batch" type="number" required>
+  Must be set to 1 for tRPC batch requests
+</ParamField>
+
+<ParamField query="input" type="object" required>
+  <Expandable title="properties">
+    <ResponseField name="project_id" type="string" required>
+      The unique identifier of the project to retrieve
+    </ResponseField>
+  </Expandable>
 </ParamField>
 
 ## Response
@@ -73,7 +81,7 @@ description: 'Retrieve details of a specific project'
 ## Example Request
 
 ```bash
-curl https://api.tryiris.dev/api/v1/projects/prj_9a8b7c6d5e \
+curl "https://api.tryiris.dev/api/trpc/projects.get?batch=1&input=%7B%22project_id%22%3A%22prj_9a8b7c6d5e%22%7D" \
   -H "Authorization: Bearer ${API_KEY}"
 ```
 
@@ -81,26 +89,32 @@ curl https://api.tryiris.dev/api/v1/projects/prj_9a8b7c6d5e \
 
 ```json
 {
-  "id": "prj_9a8b7c6d5e",
-  "name": "e-commerce-testing",
-  "description": "End-to-end testing for our e-commerce platform",
-  "created_at": "2024-01-20T11:00:00Z",
-  "updated_at": "2024-01-20T11:30:00Z",
-  "settings": {
-    "base_url": "https://shop.example.com",
-    "default_timeout": 45,
-    "environment": "staging",
-    "viewport": {
-      "width": 1920,
-      "height": 1080
+  "0": {
+    "result": {
+      "data": {
+        "id": "prj_9a8b7c6d5e",
+        "name": "e-commerce-testing",
+        "description": "End-to-end testing for our e-commerce platform",
+        "created_at": "2024-01-20T11:00:00Z",
+        "updated_at": "2024-01-20T11:30:00Z",
+        "settings": {
+          "base_url": "https://shop.example.com",
+          "default_timeout": 45,
+          "environment": "staging",
+          "viewport": {
+            "width": 1920,
+            "height": 1080
+          }
+        },
+        "tags": ["e-commerce", "web", "staging"],
+        "stats": {
+          "total_tests": 25,
+          "passing_tests": 23,
+          "failing_tests": 2,
+          "last_run_at": "2024-01-20T11:15:00Z"
+        }
+      }
     }
-  },
-  "tags": ["e-commerce", "web", "staging"],
-  "stats": {
-    "total_tests": 25,
-    "passing_tests": 23,
-    "failing_tests": 2,
-    "last_run_at": "2024-01-20T11:15:00Z"
   }
 }
 ```

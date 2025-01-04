@@ -17,12 +17,20 @@ Delete an existing AI agent by its ID.
 
 ### Body
 
-<ParamField body="data" type="object" required>
+<ParamField body="0" type="object" required>
   <Expandable title="properties">
-    <ParamField body="where" type="object" required>
+    <ParamField body="json" type="object" required>
       <Expandable title="properties">
-        <ParamField body="id" type="string" required>
-          The unique identifier of the agent to delete
+        <ParamField body="data" type="object" required>
+          <Expandable title="properties">
+            <ParamField body="where" type="object" required>
+              <Expandable title="properties">
+                <ParamField body="id" type="string" required>
+                  The unique identifier of the agent to delete
+                </ParamField>
+              </Expandable>
+            </ParamField>
+          </Expandable>
         </ParamField>
       </Expandable>
     </ParamField>

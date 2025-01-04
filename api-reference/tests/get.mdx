@@ -1,7 +1,7 @@
 ---
 title: 'Get Test'
 description: 'Retrieve details of a specific test by ID'
-api: 'GET https://app.tryiris.dev/api/trpc/test.findFirst'
+api: 'GET https://app.tryiris.dev/api/trpc/test.findFirst?batch=1&input={"where":{"id":"<test-id>"},"include":{"project":true,"createdBy":true}}'
 authentication: true
 ---
 
@@ -17,19 +17,26 @@ Retrieve detailed information about a specific test, including its project and c
 
 ### Query Parameters
 
-<ParamField query="id" type="string" required>
-  The unique identifier of the test to retrieve
+<ParamField query="batch" type="number" required>
+  Must be set to 1 for TRPC compatibility
 </ParamField>
 
-<ParamField query="include" type="object">
-  Specify related data to include in the response
+<ParamField query="input" type="object" required>
+  The query input parameters
   
-  <Expandable title="Include Object Properties">
-    <ParamField query="project" type="boolean">
-      Include project details
+  <Expandable title="Input Object Properties">
+    <ParamField query="where" type="object" required>
+      <ParamField query="id" type="string" required>
+        The unique identifier of the test to retrieve
+      </ParamField>
     </ParamField>
-    <ParamField query="createdBy" type="boolean">
-      Include creator details
+    <ParamField query="include" type="object">
+      <ParamField query="project" type="boolean">
+        Include project details
+      </ParamField>
+      <ParamField query="createdBy" type="boolean">
+        Include creator details
+      </ParamField>
     </ParamField>
   </Expandable>
 </ParamField>
@@ -135,22 +142,9 @@ Returns the test details along with included relations if specified.
 <CodeGroup>
 
 ```bash Request Example
-curl 'https://app.tryiris.dev/api/trpc/test.findFirst' \
-  -H 'Content-Type: application/json' \
+curl 'https://app.tryiris.dev/api/trpc/test.findFirst?batch=1&input={"where":{"id":"c5147ecb-22d0-4704-9a30-932ebf28302f"},"include":{"project":true,"createdBy":true}}' \
   -H 'Authorization: Bearer <your-iris-token>' \
-  --data-raw '{
-    "0": {
-      "json": {
-        "where": {
-          "id": "c5147ecb-22d0-4704-9a30-932ebf28302f"
-        },
-        "include": {
-          "project": true,
-          "createdBy": true
-        }
-      }
-    }
-  }'
+  -X GET
 ```
 
 ```json Response Example

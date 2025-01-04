@@ -1,7 +1,7 @@
 ---
 title: 'List Tests'
 description: 'Retrieve multiple tests for a project with optional batched project details'
-api: 'GET https://app.tryiris.dev/api/trpc/test.findMany'
+api: 'GET https://app.tryiris.dev/api/trpc/test.findMany?batch=1'
 authentication: true
 ---
 
@@ -17,38 +17,48 @@ Fetch a list of tests associated with a project, optionally including their late
 
 ### Query Parameters
 
-<ParamField query="projectId" type="string" required>
-  The unique identifier of the project
+<ParamField query="batch" type="number" required>
+  Must be set to 1 to enable request batching
 </ParamField>
 
-<ParamField query="name" type="object" optional>
-  Filter tests by name
+<ParamField query="input" type="object" required>
+  The query parameters in JSON format
   
   <Expandable title="Properties">
-    <ParamField query="contains" type="string">
-      Text to search within test names
+    <ParamField query="where" type="object" required>
+      <ParamField query="projectId" type="string" required>
+        The unique identifier of the project
+      </ParamField>
+      
+      <ParamField query="name" type="object" optional>
+        Filter tests by name
+        <Expandable title="Properties">
+          <ParamField query="contains" type="string">
+            Text to search within test names
+          </ParamField>
+          <ParamField query="mode" type="string">
+            Search mode (e.g., "insensitive" for case-insensitive search)
+          </ParamField>
+        </Expandable>
+      </ParamField>
     </ParamField>
-    
-    <ParamField query="mode" type="string">
-      Search mode (e.g., "insensitive" for case-insensitive search)
-    </ParamField>
-  </Expandable>
-</ParamField>
 
-<ParamField query="include" type="object" optional>
-  Specify related data to include
-  
-  <Expandable title="Properties">
-    <ParamField query="testRuns" type="object">
-      Include latest test runs
+    <ParamField query="include" type="object" optional>
+      Specify related data to include
       
       <Expandable title="Properties">
-        <ParamField query="orderBy" type="object">
-          Sorting options for test runs
-        </ParamField>
-        
-        <ParamField query="take" type="number">
-          Number of test runs to include
+        <ParamField query="testRuns" type="object">
+          Include latest test runs
+          
+          <Expandable title="Properties">
+            <ParamField query="orderBy" type="object">
+              Sorting options for test runs
+            </ParamField>
+            
+            <ParamField query="take" type="number">
+              Number of test runs to include
+            </ParamField>
+          </Expandable>
         </ParamField>
       </Expandable>
     </ParamField>
@@ -91,40 +101,11 @@ You can batch multiple related requests together for better performance. To batc
 }
 ```
 
-```bash Batched Request Example
+```bash cURL Example
 curl 'https://app.tryiris.dev/api/trpc/project.findFirst,test.findMany?batch=1' \
   -H 'Content-Type: application/json' \
   -H 'Authorization: Bearer <your-iris-token>' \
-  -d @- << EOF
-{
-  "0": {
-    "json": {
-      "where": {
-        "id": "d0a010ca-aa50-457b-9957-0d133d34886a"
-      }
-    }
-  },
-  "1": {
-    "json": {
-      "where": {
-        "projectId": "d0a010ca-aa50-457b-9957-0d133d34886a",
-        "name": {
-          "contains": "",
-          "mode": "insensitive"
-        }
-      },
-      "include": {
-        "testRuns": {
-          "orderBy": {
-            "createdAt": "desc"
-          },
-          "take": 1
-        }
-      }
-    }
-  }
-}
-EOF
+  -d '{"0":{"json":{"where":{"id":"d0a010ca-aa50-457b-9957-0d133d34886a"}}},"1":{"json":{"where":{"projectId":"d0a010ca-aa50-457b-9957-0d133d34886a","name":{"contains":"","mode":"insensitive"}},"include":{"testRuns":{"orderBy":{"createdAt":"desc"},"take":1}}}}}'
 ```
 
 </CodeGroup>
