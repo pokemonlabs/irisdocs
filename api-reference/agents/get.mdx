@@ -17,18 +17,22 @@ Retrieve all AI agents associated with your organization, ordered by creation da
 
 ### Body
 
-<ParamField body="where" type="object" required>
+<ParamField body="data" type="object" required>
   <Expandable title="properties">
-    <ParamField body="organizationId" type="string" required>
-      Your organization ID
+    <ParamField body="where" type="object" required>
+      <Expandable title="properties">
+        <ParamField body="organizationId" type="string" required>
+          Your organization ID
+        </ParamField>
+      </Expandable>
     </ParamField>
-  </Expandable>
-</ParamField>
 
-<ParamField body="orderBy" type="object">
-  <Expandable title="properties">
-    <ParamField body="createdAt" type="string">
-      Sort order for results (e.g. "desc" for descending)
+    <ParamField body="orderBy" type="object">
+      <Expandable title="properties">
+        <ParamField body="createdAt" type="string">
+          Sort order for results (e.g. "desc" for descending)
+        </ParamField>
+      </Expandable>
     </ParamField>
   </Expandable>
 </ParamField>
@@ -36,106 +40,3 @@ Retrieve all AI agents associated with your organization, ordered by creation da
 ### Response
 
 Returns an array of agent objects.
-
-<CodeGroup>
-
-```json Request Body
-{
-  "0": {
-    "json": {
-      "where": {
-        "organizationId": "6ae3ce30-c530-4a80-b9eb-d7acfcf7ee73"
-      },
-      "orderBy": {
-        "createdAt": "desc"
-      }
-    }
-  }
-}
-```
-
-```bash Request Example
-curl -X POST 'https://app.tryiris.dev/api/trpc/agent.findMany' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer <your-iris-token>' \
-  -d @- << EOF
-{
-  "0": {
-    "json": {
-      "where": {
-        "organizationId": "<your-organization-id>"
-      },
-      "orderBy": {
-        "createdAt": "desc"
-      }
-    }
-  }
-}
-EOF
-```
-
-</CodeGroup>
-
-<ResponseExample>
-```json Response
-{
-  "result": {
-    "data": {
-      "json": [
-        {
-          "id": "1d770588-9e9c-4649-b054-c7838e461187",
-          "provider": "anthropic",
-          "modelType": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-          "numAgents": 0,
-          "isActive": true,
-          "anthropicApiKey": null,
-          "awsAccessKeyId": null,
-          "awsSecretAccessKey": null,
-          "awsSessionToken": null,
-          "awsRegion": null,
-          "apiEndpoint": null,
-          "apiKey": null,
-          "organizationId": "6ae3ce30-c530-4a80-b9eb-d7acfcf7ee73",
-          "createdAt": "2025-01-01T07:32:50.124Z",
-          "updatedAt": "2025-01-01T07:32:50.124Z"
-        }
-      ]
-    }
-  }
-}
-```
-</ResponseExample>
-
-### Response Fields
-
-<ResponseField name="id" type="string">
-  Unique identifier for the agent
-</ResponseField>
-
-<ResponseField name="provider" type="string">
-  The AI provider being used
-</ResponseField>
-
-<ResponseField name="modelType" type="string">
-  The type of model for this agent
-</ResponseField>
-
-<ResponseField name="numAgents" type="number">
-  Number of agents
-</ResponseField>
-
-<ResponseField name="isActive" type="boolean">
-  Whether the agent is active
-</ResponseField>
-
-<ResponseField name="organizationId" type="string">
-  The organization ID associated with the agent
-</ResponseField>
-
-<ResponseField name="createdAt" type="date">
-  Timestamp of when the agent was created
-</ResponseField>
-
-<ResponseField name="updatedAt" type="date">
-  Timestamp of when the agent was last updated
-</ResponseField>

@@ -17,20 +17,24 @@ Create a new AI agent with specified provider and model type.
 
 ### Body
 
-<ParamField body="provider" type="string" required>
-  The AI provider to use
-</ParamField>
+<ParamField body="data" type="object" required>
+  <Expandable title="properties">
+    <ParamField body="provider" type="string" required>
+      The AI provider to use
+    </ParamField>
 
-<ParamField body="modelType" type="string" required>
-  Type of model to create
-</ParamField>
+    <ParamField body="modelType" type="string" required>
+      Type of model to create
+    </ParamField>
 
-<ParamField body="organizationId" type="string" required>
-  Your organization ID
-</ParamField>
+    <ParamField body="organizationId" type="string" required>
+      Your organization ID
+    </ParamField>
 
-<ParamField body="anthropicApiKey" type="string" required>
-  Your Anthropic API key
+    <ParamField body="anthropicApiKey" type="string" required>
+      Your Anthropic API key
+    </ParamField>
+  </Expandable>
 </ParamField>
 
 ### Response

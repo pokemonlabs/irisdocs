@@ -17,106 +17,18 @@ Delete an existing AI agent by its ID.
 
 ### Body
 
-<ParamField body="where.id" type="string" required>
-  The unique identifier of the agent to delete
+<ParamField body="data" type="object" required>
+  <Expandable title="properties">
+    <ParamField body="where" type="object" required>
+      <Expandable title="properties">
+        <ParamField body="id" type="string" required>
+          The unique identifier of the agent to delete
+        </ParamField>
+      </Expandable>
+    </ParamField>
+  </Expandable>
 </ParamField>
 
 ### Response
 
 Returns the deleted agent details upon success.
-
-<CodeGroup>
-
-```json Request Body
-{
-  "0": {
-    "json": {
-      "where": {
-        "id": "<agent-id>"
-      }
-    }
-  }
-}
-```
-
-```bash Request Example
-curl -X POST 'https://app.tryiris.dev/api/trpc/agent.delete' \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer <your-iris-token>' \
-  -d @- << EOF
-{
-  "0": {
-    "json": {
-      "where": {
-        "id": "<agent-id>"
-      }
-    }
-  }
-}
-EOF
-```
-
-</CodeGroup>
-
-<ResponseExample>
-```json Response
-[
-  {
-    "result": {
-      "data": {
-        "json": {
-          "id": "1d770588-9e9c-4649-b054-c7838e461187",
-          "provider": "anthropic",
-          "modelType": "anthropic.claude-3-5-sonnet-20241022-v2:0",
-          "numAgents": 0,
-          "isActive": true,
-          "organizationId": "6ae3ce30-c530-4a80-b9eb-d7acfcf7ee73",
-          "createdAt": "2025-01-01T07:32:50.124Z",
-          "updatedAt": "2025-01-01T07:32:50.124Z"
-        },
-        "meta": {
-          "values": {
-            "createdAt": ["Date"],
-            "updatedAt": ["Date"]
-          }
-        }
-      }
-    }
-  }
-]
-```
-</ResponseExample>
-
-### Response Fields
-
-<ResponseField name="id" type="string">
-  Unique identifier of the deleted agent
-</ResponseField>
-
-<ResponseField name="provider" type="string">
-  The AI provider that was used
-</ResponseField>
-
-<ResponseField name="modelType" type="string">
-  The type of model that was used
-</ResponseField>
-
-<ResponseField name="numAgents" type="number">
-  Number of agents associated
-</ResponseField>
-
-<ResponseField name="isActive" type="boolean">
-  Whether the agent was active
-</ResponseField>
-
-<ResponseField name="organizationId" type="string">
-  The organization ID associated with the agent
-</ResponseField>
-
-<ResponseField name="createdAt" type="date">
-  Timestamp of when the agent was created
-</ResponseField>
-
-<ResponseField name="updatedAt" type="date">
-  Timestamp of when the agent was last updated
-</ResponseField>
