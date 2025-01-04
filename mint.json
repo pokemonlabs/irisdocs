@@ -60,6 +60,7 @@
         "core-concepts/projects",
         "core-concepts/tests",
         "core-concepts/test-runs",
+        "core-concepts/browser-storage",
         "core-concepts/integrations"
       ]
     },
